@@ -1,0 +1,105 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata below."
+
+title: "VBX-ISPS · PHRONESIS-M: Substrate Convergence Over Shell Engineering — A Falsification-First Methodology for an Interplanetary Spacesuit Decision System"
+
+abstract: >
+  PHRONESIS-M is the substrate of an interplanetary-class spacesuit decision system, built
+  via the ZCS-6 (Zuup Creative Stack, six-phase) falsification-first methodology. The substrate
+  consists of five named components colocated on a ~2 kg compute module: Aletheia
+  (cryptographically signed provenance chain), MVCI (policy-driven approval gate), Mercury
+  (subleq kernel with deterministic 5-cycle WCET), Civium (LLM inference adapter with
+  teacher-forced log-probability extraction and conformal calibration), and bus isolation.
+  The architectural invariant is a deterministic-probabilistic-deterministic pipeline in
+  which hard physical-validity and safety-critical floors run before the LLM and can bypass
+  it entirely when emergencies fire. The benchmark VBX-ISPS-BENCH v1.1 cryptographically
+  committed 15 hard-fail floors against which the substrate is built. Substrate v0.2-α
+  closes 7 substrate-scope floors with documented v0.2-β residuals; 8 shell-scope floors
+  are partitioned to industry-partner work. The thesis is that the unsolved engineering
+  surface for beyond-cis-lunar autonomy is the compliance-graded decision substrate, not
+  the pressure garment — substrate convergence is the contribution; the shell is engineering.
+
+type: software
+version: "0.2-alpha"
+date-released: 2026-06-09
+
+authors:
+  - family-names: Wooden
+    given-names: Aldrich Khaalis
+    name-suffix: Sr.
+    affiliation: "Visionblox LLC; Zuup Innovation Lab; Southern New Hampshire University (MSIT Candidate)"
+    email: "khaalis.wooden@visionblox.com"
+    alias: "A. Khaalis Wooden, Sr."
+
+contact:
+  - family-names: Wooden
+    given-names: Aldrich Khaalis
+    name-suffix: Sr.
+    email: "khaalis.wooden@visionblox.com"
+
+license: Apache-2.0
+license-url: "https://www.apache.org/licenses/LICENSE-2.0"
+
+repository-code: "https://github.com/khaaliswooden-max/zandbox"
+url: "https://github.com/khaaliswooden-max/zandbox"
+
+keywords:
+  - "interplanetary spacesuit"
+  - "extravehicular activity"
+  - "compliance-graded autonomy"
+  - "decision substrate"
+  - "cryptographic provenance"
+  - "conformal inference"
+  - "drift-aware calibration"
+  - "formal verification"
+  - "subleq kernel"
+  - "deterministic WCET"
+  - "Ed25519"
+  - "OMB M-25-22"
+  - "AI Bill of Materials"
+  - "AIBOM"
+  - "OSCAL"
+  - "HIPAA technical safeguards"
+  - "NASA-STD-3001"
+  - "ANSI/A3 R15.06-2025"
+  - "ISO 12100"
+  - "falsification-first methodology"
+  - "ZCS-6"
+  - "Zuup Creative Stack"
+
+identifiers:
+  - type: other
+    value: "VBX-ISPS-BENCH v1.1 SHA-256 58bf8744d3cc78b1cb7bb88464edb7df796187c45cea1ae483e936249803c1c5"
+    description: "Cryptographically committed benchmark hash"
+  - type: other
+    value: "LEDGER #0005 root e77e79a02d836345cc35d9105862f0fb8c42b1c64fdd2af32c4646b53389e655"
+    description: "Substrate v0.2-α ledger commit"
+
+references:
+  - type: conference-paper
+    title: "Substrate Convergence Over Shell Engineering: A Falsification-First Methodology for an Interplanetary Spacesuit Decision System"
+    authors:
+      - family-names: Wooden
+        given-names: Aldrich Khaalis
+        name-suffix: Sr.
+    year: 2026
+    notes: "VBX_ISPS_IEEE_Paper.pdf · IEEEtran format · 8 pages · 45 references · venue selection pending"
+    publisher:
+      name: "Visionblox LLC; submission to IEEE pending"
+
+preferred-citation:
+  type: conference-paper
+  title: "Substrate Convergence Over Shell Engineering: A Falsification-First Methodology for an Interplanetary Spacesuit Decision System"
+  authors:
+    - family-names: Wooden
+      given-names: Aldrich Khaalis
+      name-suffix: Sr.
+      affiliation: "Visionblox LLC; Zuup Innovation Lab; Southern New Hampshire University"
+      email: "khaalis.wooden@visionblox.com"
+  year: 2026
+  month: 6
+  notes: >
+    Substrate version: v0.2-α (LEDGER #0005, root e77e79a0…89e655).
+    Benchmark version: VBX-ISPS-BENCH v1.1 (SHA-256 58bf8744…03c1c5).
+    51 of 51 tests passing.
+    Repository: https://github.com/khaaliswooden-max/zandbox
