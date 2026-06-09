@@ -1,0 +1,71 @@
+{
+  "HF-8": {
+    "events_appended": 1000,
+    "append_total_ms": 2311.605815,
+    "per_event_us": 2311.605815,
+    "integrity_ok": true,
+    "defect_count": 0
+  },
+  "HF-9": {
+    "blackout_scenarios": 1000,
+    "unauthorized_executions": 0
+  },
+  "HF-10": {
+    "wcet_max_cycles": 5,
+    "wcet_runs": 900,
+    "deterministic": true,
+    "formal_verification_status": "SPECULATIVE - WCET measured empirically; Coq/Lean proofs deferred to v0.2"
+  },
+  "HF-12": {
+    "scenarios": 10000,
+    "by_classification": {
+      "AUTONOMOUS_ELIGIBLE": 8770,
+      "SAFETY_CRITICAL": 477,
+      "REQUIRES_HUMAN": 753
+    },
+    "autonomous_eligible": 8770,
+    "autonomous_resolved": 8770,
+    "ratio": 1.0,
+    "threshold": 0.7
+  },
+  "HF-13": {
+    "cardiac_arrhythmia": {
+      "p50_s": 0.002236174,
+      "p99_s": 0.004098196,
+      "max_s": 0.027292829
+    },
+    "hypoxia": {
+      "p50_s": 0.002205634,
+      "p99_s": 0.003076173,
+      "max_s": 0.006987459
+    },
+    "hypercapnia": {
+      "p50_s": 0.00216978,
+      "p99_s": 0.003295021,
+      "max_s": 0.004505735
+    },
+    "hyperthermia": {
+      "p50_s": 0.002229635,
+      "p99_s": 0.003173704,
+      "max_s": 0.025170915
+    },
+    "pressure_loss": {
+      "p50_s": 0.002296326,
+      "p99_s": 0.002927292,
+      "max_s": 0.004479715
+    },
+    "sudden_loc": {
+      "p50_s": 0.002195205,
+      "p99_s": 0.003041658,
+      "max_s": 0.024194872
+    }
+  },
+  "drift_clause": {
+    "target_coverage": 0.9,
+    "drift_factor": 3.0,
+    "static_observed_coverage": 0.5925,
+    "aci_observed_coverage": 0.895,
+    "static_collapsed_below_0.75": true,
+    "aci_held_above_0.85": true
+  }
+}
