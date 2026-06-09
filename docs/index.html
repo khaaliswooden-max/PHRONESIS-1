@@ -321,6 +321,51 @@
     white-space: pre;
     margin-top: 40px;
   }
+  /* ===== BLUEPRINT DRAWINGS ===== */
+  .drawings { margin-top: 40px; }
+  .drawing {
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+    margin: 0 0 36px;
+  }
+  .drawing-head {
+    display: flex; align-items: baseline; gap: 22px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-dim);
+    flex-wrap: wrap;
+  }
+  .drawing-head .dwg { color: var(--ink); }
+  .drawing-head .sep { color: var(--ink-faint); }
+  .drawing-head .view {
+    margin-left: auto;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .drawing img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #0d2b4a;
+  }
+  .drawing-foot {
+    padding: 14px 22px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    line-height: 1.65;
+  }
+  .drawing-foot a { color: var(--ink); border-bottom-color: var(--line); }
+  .drawing-foot a:hover { color: #fff; border-bottom-color: var(--ink-dim); }
   .flow .hl { color: var(--ink); }
   .flow .accent { color: var(--accent); }
 
@@ -641,6 +686,50 @@
         <div class="kind">Kernel &amp; bus</div>
         <div class="what">Mercury actuates the safety-critical class with 5-cycle WCET. Privileged-write bus gates physical effect.</div>
       </div>
+    </div>
+
+    <div class="drawings">
+      <figure class="drawing">
+        <div class="drawing-head">
+          <span class="dwg">DWG VBX-ISPS-001</span>
+          <span class="sep">/</span>
+          <span>VBX-ISPS &middot; PHRONESIS-M &middot; Interplanetary Spacesuit</span>
+          <span class="sep">/</span>
+          <span>v0.1 &middot; rev A</span>
+          <span class="view">View A &mdash; Suited crew &amp; PLSS cross-section</span>
+        </div>
+        <a href="assets/phronesis_blueprint.png" target="_blank" rel="noopener">
+          <img src="assets/phronesis_blueprint.png" alt="PHRONESIS-M suit blueprint &mdash; front view, side profile, exploded PLSS cross-section, specs panel, HF-N hard-fail map." loading="lazy">
+        </a>
+        <div class="drawing-foot">
+          Front, right-side profile, and exploded PLSS cross-section &mdash; with specs panel,
+          HF-N hard-fail map, and a NOTES rail anchoring every safety-critical decision to
+          a signed Aletheia chain entry.
+          <span style="color:var(--ink-faint)">&nbsp;//&nbsp;</span>
+          <a href="assets/phronesis_blueprint.png" target="_blank" rel="noopener">Open full resolution &rarr;</a>
+        </div>
+      </figure>
+
+      <figure class="drawing">
+        <div class="drawing-head">
+          <span class="dwg">DWG VBX-ISPS-002</span>
+          <span class="sep">/</span>
+          <span>VBX-ISPS &middot; PHRONESIS-M &middot; Substrate decision flow</span>
+          <span class="sep">/</span>
+          <span>v0.2 &middot; rev A</span>
+          <span class="view">View A &mdash; Decision flow, chain rail, latency budget</span>
+        </div>
+        <a href="assets/phronesis_flow_002.png" target="_blank" rel="noopener">
+          <img src="assets/phronesis_flow_002.png" alt="PHRONESIS-M substrate decision flow &mdash; Civium &rarr; MVCI &rarr; Mercury &rarr; Aletheia, with chain-event rail, HF-N floor map, latency budget, and compliance overlay." loading="lazy">
+        </a>
+        <div class="drawing-foot">
+          Substrate decision flow &mdash; Civium LLM adapter &rarr; MVCI approval gate &rarr;
+          Mercury subleq kernel &rarr; Aletheia ledger &mdash; alongside the chain-event rail,
+          HF-N floor map, latency budget, and compliance overlay.
+          <span style="color:var(--ink-faint)">&nbsp;//&nbsp;</span>
+          <a href="assets/phronesis_flow_002.png" target="_blank" rel="noopener">Open full resolution &rarr;</a>
+        </div>
+      </figure>
     </div>
 
     <pre class="flow">     PLSS telemetry
