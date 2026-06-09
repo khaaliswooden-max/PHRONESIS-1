@@ -1,0 +1,200 @@
+{
+  "commit_id": "VBX-ISPS-LEDGER#0003",
+  "family": "VBX-ISPS",
+  "phase": "ZCS-6 Phase 5 \u2014 first runnable substrate v0.1",
+  "created_utc": "2026-06-08T14:52:19Z",
+  "author": "A. Khaalis Wooden, Sr. (MBA; MSIT Candidate, Southern New Hampshire University)",
+  "attribution_entity": "Visionblox LLC / Zuup Innovation Lab",
+  "chain_predecessor": "VBX-ISPS-LEDGER#0002",
+  "chain_predecessor_root_sha256": "f15f68fc37f8026d0b3ef31759b25a2bf77e4a268089985f094595a5c1902d08",
+  "evaluated_against_benchmark_sha256": "58bf8744d3cc78b1cb7bb88464edb7df796187c45cea1ae483e936249803c1c5",
+  "evaluated_against_benchmark_version": "VBX-ISPS-BENCH-v1.1",
+  "artifact_tree_root_sha256": "a8e9bf7d5e5b6286d7bea9c7f4b242db946e5474aadbc9dd727f0455a0de2b4d",
+  "artifact_file_count": 31,
+  "artifacts": [
+    {
+      "rel_path": "BENCHMARK_RESULTS_v0_1.md",
+      "sha256": "e1f3ad270b487739bb58be4190cb19fe21be2c2b26ebb2d879e901cfc0a846c8",
+      "size_bytes": 12377
+    },
+    {
+      "rel_path": "GAP_ANALYSIS.md",
+      "sha256": "5bd2c8d33725dd656d6da40a81e5fa21e530bad8e7656d7b2403658d7d8c3df3",
+      "size_bytes": 11433
+    },
+    {
+      "rel_path": "README.md",
+      "sha256": "041a807c77c2a87e480ad4cf951770e4aa1856438e2ab68302c768bb3cecc904",
+      "size_bytes": 7780
+    },
+    {
+      "rel_path": "compliance/HF15_evidence_package.md",
+      "sha256": "50ddefe38b2a1a23f2d1b7a2d16d38593089007afe46ca9ae2684e98b6fd60f1",
+      "size_bytes": 5458
+    },
+    {
+      "rel_path": "measurement_pass.json",
+      "sha256": "296ef8abfebb53acc58dc9accec7877908380c1060319e2a46bbec4f1a4031e6",
+      "size_bytes": 1638
+    },
+    {
+      "rel_path": "policy/isps_policy_v0_1.json",
+      "sha256": "e330852c74ce1b17e9f84ea35c4233c132bc5fca95cfafa69bd55c4cf45eade5",
+      "size_bytes": 2273
+    },
+    {
+      "rel_path": "src/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/aletheia/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/aletheia/chain.py",
+      "sha256": "f481c4b045a555e89ce597a80c41be82d030a35cdd0a5180b8986996219dfb05",
+      "size_bytes": 7255
+    },
+    {
+      "rel_path": "src/biomedical/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/biomedical/alerts.py",
+      "sha256": "113b64b1926c730915251d2d959275ee4ddf357298e50d8ae3fe66bcae6af909",
+      "size_bytes": 2135
+    },
+    {
+      "rel_path": "src/civium/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/civium/aci.py",
+      "sha256": "f241b583550881e3ff47276ab60d48470008a711b53b3ee87b6d535d482553f7",
+      "size_bytes": 4776
+    },
+    {
+      "rel_path": "src/civium/inference.py",
+      "sha256": "3fe885d8b15e400fa669fcd18034e79cd0e3c7247ff0aefdeea338e89330d27b",
+      "size_bytes": 4609
+    },
+    {
+      "rel_path": "src/isolation/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/isolation/bus.py",
+      "sha256": "4fe9cd2ff684521b2becf4ceae1024302914632bda062e1bb57542e155e82def",
+      "size_bytes": 2058
+    },
+    {
+      "rel_path": "src/mercury/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/mercury/subleq.py",
+      "sha256": "01cd770fd0be296661b981b4d9d55a87408d182569a4d759a0938823c383928a",
+      "size_bytes": 4391
+    },
+    {
+      "rel_path": "src/mvci/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/mvci/gate.py",
+      "sha256": "c57bbb97c7880048abc30aa97075257b077145cf812e5611b5e48199fd11b4c5",
+      "size_bytes": 5839
+    },
+    {
+      "rel_path": "src/runner/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "src/runner/simulate.py",
+      "sha256": "e85af6f12915ba7c80db6f1e632c767b6752fe4b3842e5c0d309f28667a1c959",
+      "size_bytes": 5363
+    },
+    {
+      "rel_path": "tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "rel_path": "tests/test_alert_latency.py",
+      "sha256": "9a3f97f1bf40beea3217c5ef267811b4b15e05fcb2c931855ba4221a3e1b6745",
+      "size_bytes": 2157
+    },
+    {
+      "rel_path": "tests/test_autonomy.py",
+      "sha256": "4b48f959bac5335b1a7df27d14c1bef527513da2befc8a21e9c32d98e2ff9815",
+      "size_bytes": 4667
+    },
+    {
+      "rel_path": "tests/test_chain.py",
+      "sha256": "66a7b4d01380e37646e578c5066e8e358d8a7f197c8e6dfb340cdd0f77f35996",
+      "size_bytes": 4210
+    },
+    {
+      "rel_path": "tests/test_compliance_pack.py",
+      "sha256": "3a74f76c21bbea8e509d8da8551850b6f3a51932ed1401080ac5acd3c82b6eaa",
+      "size_bytes": 1338
+    },
+    {
+      "rel_path": "tests/test_drift.py",
+      "sha256": "0483d4e80d7e268f878ab863925b8e49c3ea302924622938b78df79a6fe75082",
+      "size_bytes": 3361
+    },
+    {
+      "rel_path": "tests/test_gate.py",
+      "sha256": "f53260efc87f445538c2dd1e26e725914a9ca03ac903e422fe5b0befd6b10e41",
+      "size_bytes": 3521
+    },
+    {
+      "rel_path": "tests/test_kernel.py",
+      "sha256": "a70c73e48132696b7556a109e8194ccd3156c5a684cd80e0f7afdbb935e73b6b",
+      "size_bytes": 3717
+    },
+    {
+      "rel_path": "tests/test_kernel_reverify.py",
+      "sha256": "2dda1cdcecb381c653e57f1e1a50a2b44f9556abf36a25e3717334c1067ae767",
+      "size_bytes": 4351
+    }
+  ],
+  "key_results": {
+    "tests_passed": "31/31",
+    "substrate_floors_passed_outright": [
+      "HF-8",
+      "HF-9",
+      "HF-13",
+      "HF-14",
+      "HF-15 (structural)"
+    ],
+    "substrate_floors_passed_with_caveat": {
+      "HF-10": "WCET measured; full FV deferred; HW isolation = software surrogate",
+      "HF-12": "rule-based inference inflates rate to 1.000"
+    },
+    "substrate_floors_failed": [],
+    "drift_clause": "PASS for 1 of 5 named distributions (metabolic-rate analog)",
+    "bugs_found_and_fixed_during_phase_5": [
+      "Mercury Subleq control-flow defect (fell through to data section on positive results); fixed via subleq Z Z halt idiom",
+      "ACI alpha_t sign error (inverse of Gibbs-Candes 2021); fixed by reversing sign"
+    ]
+  },
+  "commit_root_sha256": "fca8c6f265058db60d6c0128ec0da1d2e4c2fc99d8d3061e1ea035e3e25e5b71",
+  "signing_key": "PLACEHOLDER - production key custody required for Aletheia DAC chain anchor",
+  "ots_anchor": "PLACEHOLDER - OpenTimestamps anchor to be appended on chain submission",
+  "phase_5_exit_verdict": "first runnable version complete; 5 of 7 substrate floors outright PASS; 2 PASS-WITH-CAVEAT with documented v0.2 closure path; 0 FAIL",
+  "next_phase": "Phase 6 \u2014 vertical-integration attack on v0.1 substrate, then v0.2 build per GAP_ANALYSIS.md",
+  "related_artifacts": {
+    "genesis": "VBX-ISPS-LEDGER#0001 (benchmark v1.0)",
+    "operational_benchmark": "VBX-ISPS-LEDGER#0002 (benchmark v1.1)"
+  }
+}

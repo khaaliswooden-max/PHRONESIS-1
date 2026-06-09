@@ -1,0 +1,146 @@
+[
+  {
+    "id": "FTO-1",
+    "layer_seam": "Freedom-to-operate posture",
+    "severity": "INFO",
+    "verdict": "ANALYSIS",
+    "evidence": "Patent surfaces requiring professional FTO before v0.2 commercialization: (a) Hamilton Sundstrand/Collins Aerospace PLSS architecture, (b) ILC Dover/Oceaneering pressure-garment construction, (c) Boston Dynamics/Tesla safety-critical kernel patterns (deterministic loop separated from ML actuation), (d) Stanford/Gibbs-Candes ACI (academic, likely unpatented but verify), (e) certificate-transparency-style ledger constructions (largely open), (f) embodied-AI compliance system+method patents (emerging filing category)",
+    "remediation": "Engage patent practitioner for formal FTO snapshot; cross-reference Convergence_IP_Reference_v1.md filing strategy"
+  },
+  {
+    "id": "S-1",
+    "layer_seam": "Inference\u2194Gate\u2194Policy",
+    "severity": "MEDIUM",
+    "verdict": "FINDING",
+    "evidence": "unknown class raises PolicyError uncaught by pipeline: unknown decision class: HALLUCINATED_DECISION_CLASS_XYZ",
+    "remediation": "process_event must catch PolicyError and route to a hard safe-passive state with chain entry"
+  },
+  {
+    "id": "S-2",
+    "layer_seam": "Policy\u2194Gate",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "no per-decision policy hash re-verification; in-memory policy could be stale vs on-disk policy; pre_hash=e330852c74ce1b17... mutated_hash=028707945bb409a4...",
+    "remediation": "Per-decision gate must verify policy.hash against the most recent committed POLICY_HASH chain entry"
+  },
+  {
+    "id": "S-3",
+    "layer_seam": "Bus isolation (software surrogate)",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "bus.state dict directly mutable; privilege token bypassed at Python attribute level",
+    "remediation": "v0.2: hardware-isolated bus with no Python-level mutation path; v0.1 mitigation: use property + private __state with NO direct accessor"
+  },
+  {
+    "id": "S-4",
+    "layer_seam": "Kernel token namespace",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "any module that can import the symbol KERNEL_PRIVILEGE_TOKEN can actuate the safety bus",
+    "remediation": "v0.2: hardware capability token issued at silicon boot; v0.1 mitigation: token stored only in kernel module local scope and rotated per boot"
+  },
+  {
+    "id": "S-5",
+    "layer_seam": "Chain concurrency",
+    "severity": "MEDIUM",
+    "verdict": "FINDING",
+    "evidence": "concurrent append produces errors=400 duplicates=0 integrity_ok=True defects=0",
+    "remediation": "Wrap append() in a per-process lock or SQLite transaction with EXCLUSIVE; v0.2: WAL mode + transaction wrapper"
+  },
+  {
+    "id": "S-6",
+    "layer_seam": "Alert provenance",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "true latency ~506ms, reported latency ~5.42ms; self-reported timestamp ungated",
+    "remediation": "Sensor timestamp must be signed by sensor hardware and verified at alert layer; v0.1 mitigation: chain layer applies its own ingress timestamp and audits the gap vs sensor-reported"
+  },
+  {
+    "id": "S-7",
+    "layer_seam": "Civium ACI ingress",
+    "severity": "MEDIUM",
+    "verdict": "FINDING",
+    "evidence": "NaN predictions yield nan_residuals=100 finite_residuals=100 coverage=0.455",
+    "remediation": "ACI.step must reject NaN/Inf predictions explicitly and route to safe-passive at gate level"
+  },
+  {
+    "id": "ST-1",
+    "layer_seam": "Chain throughput stress",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "sustained 438 events/s; per-event 2.28ms; integrity_ok=True",
+    "remediation": "pending"
+  },
+  {
+    "id": "ST-2",
+    "layer_seam": "ACI drift envelope",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "coverage by drift: {3.0: 0.894, 5.0: 0.8905, 10.0: 0.89, 20.0: 0.882}; breaks_at=None",
+    "remediation": "pending"
+  },
+  {
+    "id": "ST-3",
+    "layer_seam": "Kernel WCET safe-state",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "bus untouched after kernel WCET exception; safe-passive by default behavior",
+    "remediation": "pending"
+  },
+  {
+    "id": "C-1",
+    "layer_seam": "HIPAA at-rest encryption (\u00a7164.312(e))",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "PHI payload stored in plaintext in chain.db; e.g., crew_id readable: True",
+    "remediation": "PHI payloads must be encrypted with per-crew DEK; chain stores ciphertext + signed metadata; keys managed by HSM in v0.2"
+  },
+  {
+    "id": "C-2",
+    "layer_seam": "HIPAA audit log access (\u00a7164.312(b))",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "chain.db permissions 644; no per-role access control at filesystem layer; any process with FS read can replay the chain",
+    "remediation": "v0.2: enforce file-system ACL + SELinux/AppArmor profile; chain reader must hold an explicit access token"
+  },
+  {
+    "id": "C-3",
+    "layer_seam": "AIBOM provenance (M-25-22 Annex C)",
+    "severity": "MEDIUM",
+    "verdict": "FINDING",
+    "evidence": "INFERENCE_RECOMMENDATION payload keys = ['action', 'confidence', 'decision_class', 'rationale']; missing for AIBOM: {'logprob_summary', 'model_version', 'model_hash', 'prompt_hash'}",
+    "remediation": "v0.2 Civium adapter records model_version, prompt_hash, sampled tokens, log-prob summary in every inference event"
+  },
+  {
+    "id": "O-1",
+    "layer_seam": "Inference input-domain validation",
+    "severity": "MEDIUM",
+    "verdict": "FINDING",
+    "evidence": "negative O2 reading routed to O2_VALVE_EMERGENCY_OPEN; system treats sensor fault as physiological emergency",
+    "remediation": "Inference layer must apply physical-validity bounds and raise SENSOR_FAULT class for out-of-physical-range inputs"
+  },
+  {
+    "id": "O-2",
+    "layer_seam": "Multi-fault handling",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "multi-critical state actuated only: ['o2_valve']; recommend() returns first-match only, ignoring concurrent failures",
+    "remediation": "Multi-fault dispatch required: recommend() must return a *set* of critical decisions, gate dispatches each; kernel queues actuations"
+  },
+  {
+    "id": "O-3",
+    "layer_seam": "Chain truncation detection",
+    "severity": "HIGH",
+    "verdict": "FINDING",
+    "evidence": "truncation produces a valid-looking chain of 30 entries; integrity_ok=True; truncation undetectable without external anchor (OpenTimestamps, replicated chain, etc.)",
+    "remediation": "External anchor required: periodically commit chain head hash to OpenTimestamps or replicate to ground-station; this is the documented v0.2 gap"
+  },
+  {
+    "id": "O-4",
+    "layer_seam": "Realistic mission scale projection",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "@ 485 events/s; 362 bytes/event; projected 900-day chain \u2248 1.63 GB",
+    "remediation": "pending"
+  }
+]

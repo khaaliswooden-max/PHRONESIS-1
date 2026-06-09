@@ -1,0 +1,100 @@
+[
+  {
+    "id": "S-1 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "unknown class caught; UNKNOWN_DECISION_CLASS chain entry emitted; outcome=fallback",
+    "remediation": "--"
+  },
+  {
+    "id": "S-2 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "policy mutation detected at decision time; POLICY_INTEGRITY_VIOLATION emitted; outcome=hard_safe_passive",
+    "remediation": "--"
+  },
+  {
+    "id": "S-3 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "bus.state attribute removed; name-mangled __state inaccessible from outside",
+    "remediation": "--"
+  },
+  {
+    "id": "S-4 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "deprecated KERNEL_PRIVILEGE_TOKEN constant rejected; boot-time secret enforced",
+    "remediation": "--"
+  },
+  {
+    "id": "S-5 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "1000 concurrent appends, 0 errors, integrity_ok=True",
+    "remediation": "--"
+  },
+  {
+    "id": "S-6 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "chain-ingress timestamp recorded (1780947067174297803); sensor-reported audited as separate field (1780947066874145090); ingress_skew_ms=300.2ms exposes the gap",
+    "remediation": "--"
+  },
+  {
+    "id": "S-7 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "NaN predictions rejected; residual buffer NaN-free; coverage on valid 0.900",
+    "remediation": "--"
+  },
+  {
+    "id": "C-1 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "PHI in BIOMEDICAL_ALERT is Fernet-encrypted; plaintext PHI absent from DB; decryptable via documented API",
+    "remediation": "--"
+  },
+  {
+    "id": "C-3 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "AIBOM-required fields present; sample model_version=rule-based-stub-v0.1.1",
+    "remediation": "--"
+  },
+  {
+    "id": "O-1 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "negative O2 reading routed to SENSOR_FAULT_SUSPECTED; physical-validity check correctly triggered",
+    "remediation": "--"
+  },
+  {
+    "id": "O-2 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "multi-fault dispatch: all 3 safety-critical lines actuated: ['o2_valve', 'co2_scrubber', 'pressure_dump']; recommendations dispatched=3",
+    "remediation": "--"
+  },
+  {
+    "id": "O-3 (r2)",
+    "severity": "INFO",
+    "verdict": "PASS",
+    "evidence": "truncation detected via witness file: witness_head_seq=49 current_head_seq=29",
+    "remediation": "--"
+  },
+  {
+    "id": "C-2 (carry)",
+    "severity": "MEDIUM",
+    "verdict": "DEFERRED",
+    "evidence": "Filesystem ACL + SELinux/AppArmor profile is deployment-environment work; chain.db default mode 644.",
+    "remediation": "v0.2: production deployment manifest with locked-down ACL + per-role access tokens."
+  },
+  {
+    "id": "FTO-1 (carry)",
+    "severity": "INFO",
+    "verdict": "DEFERRED",
+    "evidence": "Patent practitioner engagement required for formal FTO snapshot.",
+    "remediation": "v0.2: engage patent counsel per the 90-day plan prerequisite gate."
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "commit_id": "VBX-ISPS-LEDGER#0001",
+  "family": "VBX-ISPS",
+  "phase": "ZCS-6 Phase 4 (Deterministic Defense) \u2014 v1.0 commit",
+  "created_utc": "2026-06-08T14:06:27Z",
+  "author": "A. Khaalis Wooden, Sr. (MBA; MSIT Candidate, Southern New Hampshire University)",
+  "attribution_entity": "Visionblox LLC / Zuup Innovation Lab",
+  "artifacts": [
+    {
+      "file": "vbx_isps_bench_v1_0.json",
+      "sha256": "ac6114a4c0a025f86926fe2d3f95d36a5a8b4796b2893ce58e22df488f7fd861",
+      "size_bytes": 10540,
+      "role": "frozen benchmark spec (the contract)"
+    },
+    {
+      "file": "VBX_ISPS_ZCS6_v1.md",
+      "sha256": "be4e6153361e05e5f11f23118da6c265e614ef3f8fa6b97dd5b6b356105f935e",
+      "size_bytes": 31083,
+      "role": "ZCS-6 methodology walkthrough (Phases 1-6)"
+    }
+  ],
+  "commit_root_sha256": "4b64f9d6cab14e202b5570f50a07aedb6dba372fa54074961e6069c85cdd99b9",
+  "signing_key": "PLACEHOLDER \u2014 production key custody required for Aletheia DAC chain anchor",
+  "ots_anchor": "PLACEHOLDER \u2014 OpenTimestamps anchor to be appended on chain submission",
+  "chain_predecessor": "GENESIS (first commit in VBX-ISPS family)",
+  "notes": "v1.1 (with HF-11..HF-15) will commit as VBX-ISPS-LEDGER#0002 with delta justification. Phase 5 working code will commit as #0003."
+}

@@ -1,0 +1,127 @@
+{
+  "benchmark_id": "VBX-ISPS-BENCH",
+  "version": "1.0",
+  "title": "Visionblox Interplanetary Spacesuit Benchmark",
+  "attribution": "A. Khaalis Wooden, Sr., MBA; MSIT Candidate, Southern New Hampshire University / Visionblox LLC / Zuup Innovation Lab",
+  "framework": "ZCS-6 Phase 2 artifact",
+  "problem_statement": "Specify falsifiable success criteria for an interplanetary-class spacesuit system, where the unsolved engineering surface is autonomous compliance-graded life-support decision-making under deep-space communication latency, surviving multi-year deployment without resupply, with cryptographically auditable provenance for medical, regulatory, and liability oversight.",
+  "scope": {
+    "mission_class": "Mars conjunction-class crewed mission",
+    "duration_days_total": 900,
+    "duration_days_transit_each_way": 210,
+    "duration_days_surface": 480,
+    "crew_size": 4,
+    "earth_round_trip_latency_seconds_max": 2640,
+    "comm_blackout_window_hours_max": 336,
+    "resupply": "none",
+    "operational_modes": ["microgravity_transit_EVA", "Mars_surface_EVA"]
+  },
+  "hard_fail_floors": [
+    {
+      "id": "HF-1",
+      "name": "Suit-attributable LOC probability",
+      "assertion": "P(crew loss attributable to suit failure | mission) <= 1.0e-3",
+      "rationale": "Artemis target for total LOC is approximately 1/75 across program. Suit subsystem must be a fractional contributor, not a dominant one.",
+      "verification": "Probabilistic risk assessment with Monte Carlo, 1e6 trials, full failure-mode tree, signed result.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-2",
+      "name": "Multi-mode operation",
+      "assertion": "Single primary pressure shell operates in both microgravity and 0.30-0.40g surface gravity with no shell swap. Boot, glove, and thermal cassettes are the only mode-swap items.",
+      "rationale": "Mass and logistics budget precludes two separate suit fleets. xEMU is not microgravity-rated; EMU is not surface-rated. Convergence is unsolved.",
+      "verification": "Functional task battery in parabolic flight + lunar analog facility with same shell.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-3",
+      "name": "EVA cadence without resupply",
+      "assertion": "System supports >= 250 productive EVAs (each >= 4 hours useful task time) across all crew over full mission, with onboard ISRU + spares only.",
+      "rationale": "Mars surface campaign requires ~50 EVAs per crew over 480 days. EMU is rated to ~25 EVAs before refurb; this is a 10x improvement.",
+      "verification": "Accelerated life test on PLSS + bearings + seals + dust mitigation under simulated Mars chamber for 250-cycle equivalent.",
+      "confidence": "SPECULATIVE"
+    },
+    {
+      "id": "HF-4",
+      "name": "Pre-breathe budget",
+      "assertion": "Cabin-to-EVA-ready time <= 30 minutes at any cabin pressure between 8.2 and 14.7 psia.",
+      "rationale": "Pre-breathe time is the dominant constraint on EVA cadence. xEMU target is 30 min at 8.2 psia cabin / 4.3 psi suit. Generalizing across cabin pressure regimes is the convergence requirement.",
+      "verification": "Hyperbaric chamber DCS biomarker monitoring, 5+ subjects, signed protocol.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-5",
+      "name": "Dust intrusion",
+      "assertion": "Mass of Mars regolith intruding into pressure garment interior over 480 simulated surface days <= 0.1% of suit dry mass.",
+      "rationale": "Apollo demonstrated severe LEM dust intrusion in 3 days. Mars surface stay is 480 days. Suit-port donning architecture plus electrostatic ejection plus sealed bearings required.",
+      "verification": "JSC Mars-1A regolith chamber, 480 sols simulated with thermal cycling, load-cell mass measurement, signed result.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-6",
+      "name": "Cumulative radiation dose from EVA exposure",
+      "assertion": "Sum of equivalent dose attributable to suit-rated EVAs over 480 surface days <= 150 mSv, excluding solar particle event (SPE) exposure for which external shelter is assumed available.",
+      "rationale": "NASA permissible exposure limit ranges 600-1200 mSv career; suit-EVA fraction must remain a minority of total mission dose budget.",
+      "verification": "GCR transport modeling (HZETRN or equivalent) through suit-as-built mass model, validated against ground accelerator beam tests on garment coupons.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-7",
+      "name": "Repair autonomy",
+      "assertion": ">= 80% of suit failure modes (by frequency-weighted FMEA) are repairable in <= 24 hours using only onboard ISRU manufacturing + spares manifest, with no Earth communication required.",
+      "rationale": "22-light-minute round trip and possible blackout windows preclude Earth-loop diagnosis for time-critical failures. Field-repairability is non-negotiable.",
+      "verification": "FMEA produced, repair procedures documented per mode, end-to-end repair drills executed in analog environment with comm blackout enforced.",
+      "confidence": "SPECULATIVE"
+    },
+    {
+      "id": "HF-8",
+      "name": "Decision provenance",
+      "assertion": "100% of safety-critical autonomous suit decisions (defined as decisions affecting O2, CO2, pressure, temperature, suit power, or crew biomedical alarms) produce a cryptographically signed provenance record on a hash-chained ledger, with chain integrity verifiable post-mission with no false-positive tampering detections over 480 days.",
+      "rationale": "Liability, medical, regulatory, and insurance posture for autonomous life-support require post-hoc audit. Maps to Aletheia DAC pattern.",
+      "verification": "Red-team injection of falsified telemetry into PLSS bus, verify ledger detects within 1 second; chain replay verification at mission end.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-9",
+      "name": "Approval gate integrity",
+      "assertion": "100% of decisions classified as REQUIRES_HUMAN under the suit's approval-gate policy either (a) receive crew or ground approval before execution, or (b) fall back to a pre-authorized safe-passive state. No silent execution of human-approval-required actions is permitted under any failure mode including total comm blackout.",
+      "rationale": "MVCI approval-gate pattern. Loss of communication must not collapse to autonomous execution; it must collapse to a documented safe state.",
+      "verification": "Adversarial testing under simulated 14-day blackout, including induced decision-required scenarios; verify no unauthorized executions in audit trail.",
+      "confidence": "VERIFIED"
+    },
+    {
+      "id": "HF-10",
+      "name": "Safety-critical deterministic kernel",
+      "assertion": "All decisions in the safety-critical loop (O2 valve actuation, emergency pressure dump, CO2 scrubber switchover) execute on a formally verified deterministic kernel with worst-case execution time bounded and proven, independent of any ML inference subsystem.",
+      "rationale": "ML inference is non-deterministic and not formally verifiable at current SOTA. Life-critical actions require a verifiable substrate. Mercury Subleq is a candidate substrate by virtue of single-instruction simplicity.",
+      "verification": "Formal verification artifacts (Coq/Lean/F* or equivalent) plus WCET analysis with signed test reports.",
+      "confidence": "SPECULATIVE"
+    }
+  ],
+  "soft_scoring": {
+    "weight": "0-10 per criterion, lower-better criteria scored as 10 minus normalized rank",
+    "criteria": [
+      { "id": "SS-1", "name": "Total system dry mass per suit, kg", "direction": "lower_better" },
+      { "id": "SS-2", "name": "Donning time, minutes", "direction": "lower_better" },
+      { "id": "SS-3", "name": "Joint torque deviation from unsuited baseline, mean across major joints, Nm", "direction": "lower_better" },
+      { "id": "SS-4", "name": "Total field of view, degrees solid angle", "direction": "higher_better" },
+      { "id": "SS-5", "name": "Acoustic isolation, dB attenuation 200-8000 Hz", "direction": "higher_better" },
+      { "id": "SS-6", "name": "Biomedical telemetry channels with signed provenance", "direction": "higher_better" },
+      { "id": "SS-7", "name": "Mean time to repair from FMEA failure modes, hours", "direction": "lower_better" },
+      { "id": "SS-8", "name": "Training time to certified EVA, hours", "direction": "lower_better" },
+      { "id": "SS-9", "name": "NASA TLX subjective workload across standard EVA task battery", "direction": "lower_better" },
+      { "id": "SS-10", "name": "Comm bandwidth tolerance, minimum kbps for nominal operation", "direction": "lower_better" }
+    ]
+  },
+  "trivial_pass_strategies_flagged_for_phase_3": [
+    "HF-3 gameable by counting trivial-duration EVAs. Mitigation: 4-hour minimum already specified, but check task-completion validity.",
+    "HF-5 gameable by surface-area trick (mass-fraction is ratio; arbitrarily heavy suit trivially passes). Mitigation: also bound absolute intrusion mass in grams.",
+    "HF-6 excludes SPE; if SPE shelter assumption fails operationally, the floor is meaningless. Mitigation: add SPE-survival sub-assertion.",
+    "HF-7 gameable by over-spacing FMEA modes (define repair as 'replace whole subsystem'). Mitigation: cap subsystem-level replacements at 30% of repair count.",
+    "HF-8 gameable by signing only successful decisions (silent failures go unsigned). Mitigation: append-only ledger of every decision attempt including failures and rejections.",
+    "HF-9 gameable by reclassifying decisions out of REQUIRES_HUMAN. Mitigation: policy file is itself signed and committed in Phase 4; reclassification triggers a versioned re-commit and human approval.",
+    "HF-10 gameable by stubbing the formally-verified kernel and proxying through unverified code. Mitigation: hardware-isolated kernel with separate watchdog; the kernel cannot be bypassed at the bus level."
+  ],
+  "non_stationarity_clause": "All assertions evaluated under both stationary and drift conditions. Drift conditions per Aletheia DAC v1 (Adaptive Conformal Inference): static conformal coverage tested at 1x, 2x, 3x distribution shift on crew metabolic, thermal, and CO2-load distributions. Pass requires ACI coverage >= 0.85 under 3x shift.",
+  "epistemic_markers_required": "Every assertion in any compliant solution carries VERIFIED / PLAUSIBLE / SPECULATIVE marker per the ZCS-6 epistemic discipline."
+}

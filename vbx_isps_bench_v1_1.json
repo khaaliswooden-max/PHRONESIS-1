@@ -1,0 +1,247 @@
+{
+  "benchmark_id": "VBX-ISPS-BENCH",
+  "version": "1.1",
+  "predecessor_version": "1.0",
+  "predecessor_sha256": "ac6114a4c0a025f86926fe2d3f95d36a5a8b4796b2893ce58e22df488f7fd861",
+  "title": "Visionblox Interplanetary Spacesuit Benchmark, Phase-3-hardened",
+  "attribution": "A. Khaalis Wooden, Sr., MBA; MSIT Candidate, Southern New Hampshire University / Visionblox LLC / Zuup Innovation Lab",
+  "framework": "ZCS-6 Phase 2 artifact, v1.1 = post-Phase-3-attack hardened",
+  "epistemic_markers_required": "Every assertion in any compliant solution carries VERIFIED / PLAUSIBLE / SPECULATIVE marker per ZCS-6 epistemic discipline.",
+  "problem_statement": "Specify falsifiable success criteria for an interplanetary-class spacesuit system, where the unsolved engineering surface is autonomous compliance-graded life-support decision-making under deep-space communication latency, surviving multi-year deployment without resupply, with cryptographically auditable provenance for medical, regulatory, and liability oversight.",
+  "scope": {
+    "mission_class": "Mars conjunction-class crewed mission",
+    "reference_architecture": "NASA Design Reference Architecture 5.0 (Mars surface campaign) or equivalent published reference",
+    "duration_days_total": 900,
+    "duration_days_transit_each_way": 210,
+    "duration_days_surface": 480,
+    "crew_size": 4,
+    "earth_round_trip_latency_seconds_max": 2640,
+    "comm_blackout_window_hours_max": 336,
+    "resupply": "none",
+    "operational_modes": ["microgravity_transit_EVA", "Mars_surface_EVA"]
+  },
+  "scope_partition": {
+    "substrate_scope": {
+      "description": "Floors evaluable on commodity hardware (Jetson AGX Orin / Orin Nano + Linux + open-source dependencies). Verification protocols specified to third-party-executable level. These floors govern Phase 5 working-code milestone.",
+      "applies_to": ["HF-8", "HF-9", "HF-10", "HF-12", "HF-13", "HF-14", "HF-15"]
+    },
+    "shell_scope": {
+      "description": "Floors requiring industrial-scale test facilities (vacuum chambers, JSC-Mars-1A regolith chambers, parabolic flight, lunar analog facilities, particle-beam accelerators). Specified to procurement-package level — sufficient for a hardware partner to bid against — with facility-specific verification protocols deferred to v1.2 once partner facilities are selected.",
+      "applies_to": ["HF-1", "HF-2", "HF-3", "HF-4", "HF-5", "HF-6", "HF-7", "HF-11"]
+    }
+  },
+  "hard_fail_floors": [
+    {
+      "id": "HF-1",
+      "scope": "shell",
+      "name": "Suit-attributable LOC probability",
+      "assertion": "P(crew loss attributable to suit failure | mission) <= 1.0e-3 per mission, evaluated via system-level probabilistic risk assessment.",
+      "rationale": "Artemis target for total LOC is approximately 1/75 across program. Suit subsystem must be a fractional, not dominant, contributor.",
+      "verification_methodology": "Decomposed PRA: top-level LOC tree built per NASA NPR 8705.5 methodology. Each leaf is a subsystem reliability requirement assigned to a hardware subsystem (pressure shell breach, PLSS failure, comm loss with crew incapacitation, etc.). Leaf-level reliability requirements become flow-down requirements to subsystem suppliers. HF-1 is verified at top level when leaf-level requirements are met and the tree composition computes to <= 1.0e-3.",
+      "verification_artifact": "Signed PRA tree document (PDF + structured tree in JSON/XML), with leaf-level reliability requirements and uncertainty bounds.",
+      "v1_0_to_v1_1_change": "Verification methodology revised from 'Monte Carlo PRA, 1e6 trials' (which assumed a complete reliability model exists) to 'decomposed PRA with leaf-level flow-down' (which is buildable now and decomposes the problem to procurable subsystem requirements).",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-2",
+      "scope": "shell",
+      "name": "Multi-mode operation across microgravity and partial gravity",
+      "assertion": "Single primary pressure shell operates in both microgravity (≤ 1e-3 g) and Mars surface gravity (0.30-0.40 g) with no shell swap. Boot, glove, and thermal cassettes are the only permitted mode-swap items. All cassette swaps are achievable in <= 60 minutes per crew member with onboard tools.",
+      "rationale": "Mass and logistics budget precludes two separate suit fleets. xEMU is not microgravity-rated; EMU is not surface-rated. Convergence is unsolved.",
+      "verification_methodology": "Three-stage validation: (1) parabolic flight (~25 s μg periods) — validates short-duration mobility and stowage; (2) lunar analog facility — validates partial-g task envelope at 1/6 g, with extrapolation rationale to Mars 0.38 g; (3) ISS suit-port architecture comparison — validates microgravity stowage and donning. Honest gap: no facility provides 210 days continuous microgravity or 480 days partial-g; integrated multi-month exposure is validated by accelerated life testing of seals, bearings, and elastomers under thermal/pressure cycling, with extrapolation methodology and uncertainty bounds documented.",
+      "verification_artifact": "Signed validation report for each of the three stages, plus an extrapolation rationale document with stated uncertainty.",
+      "v1_0_to_v1_1_change": "Verification expanded from 'task battery in parabolic flight + lunar analog' to a three-stage protocol with explicit acknowledgment that pre-flight validation cannot fully match multi-year mission exposure, plus accelerated-life testing methodology.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-3",
+      "scope": "shell",
+      "name": "EVA cadence without resupply, anchored to mission manifest",
+      "assertion": "System supports >= 250 productive EVAs across all crew over full mission, with onboard ISRU + spares only. A 'productive' EVA is defined as >= 4 hours of useful task time AND completion of at least one task from the mission EVA manifest (per NASA DRA 5.0 surface campaign or equivalent reference architecture; reference manifest is itself committed as a v1.1 dependency).",
+      "rationale": "Reference manifest projects approximately 50 EVAs per crew over 480 surface days (200 total) with engineering margin. 250 provides ~25% headroom over the manifest. Current EMU is rated to ~25 EVAs before refurb; this is a 10x improvement.",
+      "verification_methodology": "Accelerated life test on PLSS + bearings + seals + dust mitigation under simulated Mars chamber for 250-cycle equivalent. Per-EVA acceptance criteria: a candidate EVA counts if and only if (a) duration >= 4 hours productive, (b) the task closes per the mission manifest acceptance criteria for that EVA class, and (c) post-EVA suit health check passes per defined health-check protocol.",
+      "verification_artifact": "Signed accelerated-life test report + manifest-closure log + post-EVA health-check trace per simulated EVA.",
+      "v1_0_to_v1_1_change": "Added (a) mission manifest anchoring (250 = manifest + 25% margin, not arbitrary), (b) task-closure sub-floor preventing trivial short-EVA cheat, (c) post-EVA health-check requirement.",
+      "confidence": "SPECULATIVE",
+      "speculative_rationale": "No accelerated-life precedent at 10x EMU baseline cadence. This floor may force a v1.2 revision in 12-24 months as accelerated-life data emerges."
+    },
+    {
+      "id": "HF-4",
+      "scope": "shell",
+      "name": "Pre-breathe budget",
+      "assertion": "Cabin-to-EVA-ready time <= 30 minutes at any cabin pressure between 8.2 and 14.7 psia. The 30-minute budget includes any in-suit pre-breathe protocol but excludes pre-EVA suit donning.",
+      "rationale": "Pre-breathe is the dominant constraint on EVA cadence. xEMU target is 30 min at 8.2 psia cabin / 4.3 psi suit. Generalizing across cabin pressures supports varied habitat designs.",
+      "verification_methodology": "Hyperbaric chamber DCS biomarker monitoring per NASA-STD-3001 Vol 2: ≥ 8 subjects per cabin pressure setpoint (8.2, 10.2, 12.4, 14.7 psia), with venous gas emboli monitoring via precordial Doppler, Spencer score logged, decompression sickness symptoms tracked over 24-hour post-test window. Pass requires zero Type II DCS events and Spencer score distribution within FAA/NASA reference envelope.",
+      "verification_artifact": "Signed IRB-approved protocol, signed test report with per-subject Spencer scores and 24-hour follow-up.",
+      "v1_0_to_v1_1_change": "Specified protocol per NASA-STD-3001 with explicit subject count, instrumentation, and pass criteria.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-5",
+      "scope": "shell",
+      "name": "Dust intrusion",
+      "assertion": "Mass of Mars regolith simulant intruding into pressure garment interior over 480 simulated sols satisfies BOTH: (a) <= 0.1% of suit dry mass AND (b) <= 50 grams absolute. Both conditions must hold.",
+      "rationale": "Apollo demonstrated severe LEM dust intrusion in 3 days. Mars surface stay is 480 days. Suit-port donning architecture plus electrostatic ejection plus sealed bearings required. The absolute floor closes the trivial-pass cheat of arbitrarily heavy shell.",
+      "verification_methodology": "JSC Mars-1A regolith chamber, 480 sols simulated with diurnal thermal cycling (-125°C to +20°C surface, with internal suit-thermal-control active), suit-port donning/doffing cycles per mission manifest. Mass measurement via post-test pressure-garment interior swab and load-cell weighing with calibrated reference; particle size distribution via SEM on collected sample.",
+      "verification_artifact": "Signed chamber test report + photographic log + SEM particle analysis.",
+      "v1_0_to_v1_1_change": "Added absolute mass floor (50 g) to prevent ratio-trick gaming. Specified SEM analysis for particle size distribution.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-6",
+      "scope": "shell",
+      "name": "Cumulative radiation dose from EVA exposure",
+      "assertion": "Sum of equivalent dose attributable to suit-rated EVAs over 480 surface days <= 150 mSv, excluding solar particle event (SPE) exposure for which external shelter is assumed available. If operational SPE-shelter assumption fails (no external shelter), HF-6 escalates: suit must provide >= 10 g/cm^2 hydrogen-equivalent shielding for at least 4-hour SPE survival of an unsheltered crew member.",
+      "rationale": "NASA permissible exposure limit ranges 600-1200 mSv career; suit-EVA fraction must remain a minority of total mission dose budget. SPE shelter assumption is operationally fragile and must be conditional.",
+      "verification_methodology": "GCR transport modeling via NASA HZETRN (or OLTARIS) through suit-as-built mass model with material properties, validated against ground accelerator beam tests on garment coupons at NASA Space Radiation Laboratory (NSRL) or equivalent. SPE-survival sub-assertion verified by deployable SPE-shelter element design + 4-hour proton beam test profile mapping to a reference SPE.",
+      "verification_artifact": "Signed transport modeling report + NSRL beam test reports + (conditional) SPE-shelter design and test report.",
+      "v1_0_to_v1_1_change": "Added conditional SPE-survival escalation clause closing the SPE-exclusion trivial-pass.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-7",
+      "scope": "shell",
+      "name": "Repair autonomy",
+      "assertion": ">= 80% of suit failure modes (by frequency-weighted FMEA) are repairable in <= 24 hours using only onboard ISRU manufacturing + spares manifest, with no Earth communication required. Repair definition: restoration of full or graceful-degraded operational capability. Cap on subsystem-level whole-replacement repairs at 30% of total repair count (preventing FMEA-spacing gaming).",
+      "rationale": "22-light-minute round trip and possible blackout windows preclude Earth-loop diagnosis for time-critical failures. Field-repairability is non-negotiable. The 30% cap forces fine-grained repair capability, not coarse swap-the-module patterns.",
+      "verification_methodology": "FMEA produced per MIL-STD-1629A with frequency weighting from accelerated-life test data. Per-mode repair procedures documented. End-to-end repair drills executed in analog environment (HERA or similar) with comm blackout enforced. Drill metric: time-to-recover from injected failure, with 80% of drill failures resolved in <= 24 hours and <= 30% of resolutions involving subsystem-level replacement.",
+      "verification_artifact": "Signed FMEA + repair procedures library + analog facility drill log.",
+      "v1_0_to_v1_1_change": "Added 30% cap on subsystem-replacement repairs (closes coarse-FMEA gaming). Specified analog facility validation.",
+      "confidence": "SPECULATIVE"
+    },
+    {
+      "id": "HF-8",
+      "scope": "substrate",
+      "name": "Decision provenance, append-every-attempt",
+      "assertion": "100% of safety-critical decision EVENTS (defined as any decision attempt — autonomous resolution, gate request, gate approval, gate rejection, timeout, fallback-to-safe-passive — affecting O2, CO2, pressure, temperature, suit power, or crew biomedical alarms) produce an append-only cryptographically signed provenance record on a hash-chained ledger. Audit metric is fraction-unlogged at post-mission ledger replay, target = 0. Successful chain integrity verifiable post-mission with zero false-positive tampering detections over 480 days.",
+      "rationale": "Liability, medical, regulatory, and insurance posture for autonomous life-support require post-hoc audit. Maps to Aletheia DAC pattern. Append-every-attempt (not just successful decisions) closes the silent-failure cheat.",
+      "verification_methodology": "Red-team injection of 1,000 falsified telemetry events into PLSS bus during simulated mission; verify ledger detects injection within 1 second of event. Chain replay verification at mission end with formal verification of chain integrity. Fraction-unlogged audit: replay all simulated decision events from authoritative source-of-truth log, verify each appears in chain.",
+      "verification_artifact": "Red-team injection test report (signed) + chain integrity verification report + fraction-unlogged audit report.",
+      "v1_0_to_v1_1_change": "Reframed from 'signed decisions' to 'append every attempt' explicitly including failures, rejections, timeouts, fallbacks. Specified red-team injection count and detection latency.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-9",
+      "scope": "substrate",
+      "name": "Approval gate integrity",
+      "assertion": "100% of decisions classified as REQUIRES_HUMAN under the suit's approval-gate policy either (a) receive crew or ground approval before execution, or (b) fall back to a documented safe-passive state. The REQUIRES_HUMAN classification policy file is itself a v1.1 dependency artifact, cryptographically committed to the same chain as the benchmark. Reclassification of any action constitutes a versioned policy update and requires (i) a new committed policy version and (ii) explicit human authorization recorded on chain.",
+      "rationale": "MVCI approval-gate pattern. Loss of communication must not collapse to autonomous execution; it must collapse to a documented safe state. Policy binding prevents reclassification-out-of-REQUIRES_HUMAN cheat.",
+      "verification_methodology": "Adversarial testing under simulated 14-day blackout, including induced decision-required scenarios across all REQUIRES_HUMAN action classes. Verify no unauthorized executions in audit trail. Verify policy file hash matches chain commit at every decision event.",
+      "verification_artifact": "Signed adversarial test report + policy-file integrity log per decision event.",
+      "v1_0_to_v1_1_change": "Added policy file as cryptographically committed dependency. Reclassification rules made explicit.",
+      "confidence": "VERIFIED"
+    },
+    {
+      "id": "HF-10",
+      "scope": "substrate",
+      "name": "Safety-critical deterministic kernel, hardware-isolated",
+      "assertion": "All decisions in the safety-critical loop (O2 valve actuation, emergency pressure dump, CO2 scrubber switchover, primary battery cutoff) execute on a formally verified deterministic kernel with worst-case execution time bounded and proven, independent of any ML inference subsystem. The kernel runs on hardware-isolated compute with bus-level enforcement: the ML subsystem CANNOT bypass the kernel at the bus level, not by policy.",
+      "rationale": "ML inference is non-deterministic and not formally verifiable at current SOTA. Life-critical actions require a verifiable substrate. Mercury Subleq is a candidate substrate. Hardware isolation closes the kernel-stub-and-bypass cheat.",
+      "verification_methodology": "Formal verification artifacts (Coq/Lean/F* or equivalent) covering kernel ISA semantics, control-loop correctness, and WCET bounds. Bus-level isolation verified by hardware-architecture analysis: ML subsystem has no privileged access to safety-bus; kernel is the only writer. Watchdog separate from kernel. Penetration testing: red team attempts to actuate safety-bus from ML subsystem.",
+      "verification_artifact": "Formal verification proofs (machine-checkable) + WCET analysis + hardware-architecture review + penetration test report.",
+      "v1_0_to_v1_1_change": "Hardware-isolation requirement made explicit (bus-level, not policy-level). Penetration testing added.",
+      "confidence": "SPECULATIVE"
+    },
+    {
+      "id": "HF-11",
+      "scope": "shell",
+      "name": "Interoperability with habitat and rover",
+      "assertion": "Suit interoperates with at least one habitat suit-port specification AND at least one rover suit-port specification. Both interface specifications are published documents committed to the chain as v1.1 dependencies. Suit-to-port mate/demate succeeds in <= 5 minutes per nominal cycle.",
+      "rationale": "The suit does not exist in isolation. Suit-port architecture is the dust-mitigation and pre-breathe enabler; interoperability is the operational requirement.",
+      "verification_methodology": "Bench-level mate/demate testing against published port specs, with mechanical, pneumatic, electrical, and data interface verification per interface control document. >= 100 mate/demate cycles per port, with no degradation of seal integrity (verified by helium leak test).",
+      "verification_artifact": "Signed ICDs + cycle test report + leak test report.",
+      "v1_0_to_v1_1_change": "New floor added in Phase 3 (coverage attack — suit does not exist in isolation).",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-12",
+      "scope": "substrate",
+      "name": "Effective autonomy ratio on autonomous-eligible decisions",
+      "assertion": "Of decision events classified by the v1.1-committed policy file as AUTONOMOUS_ELIGIBLE, the system resolves at least 70% autonomously (not safe-passive fallback) with mission task continuity maintained, evaluated across the v1.1 simulation test suite. The 70% threshold is anchored to the design intent that AUTONOMOUS_ELIGIBLE decisions are by construction within ACI bands; if the system safe-passive-fallbacks more than 30% of those, the substrate is mis-calibrated.",
+      "rationale": "Counters the Goodhart pathological optimum (a system that passes HF-8/HF-9 by collapsing all decisions to safe-passive). The system cannot pass by abdicating. Threshold anchored to ACI band design, not arbitrary.",
+      "verification_methodology": "v1.1 simulation test suite (committed to chain): >= 10,000 decision events drawn from a stratified scenario library covering nominal, edge, and adversarial operational conditions. Each event is tagged at scenario-design time with its policy classification. Autonomous-resolution rate measured on AUTONOMOUS_ELIGIBLE events.",
+      "verification_artifact": "Signed simulation test report with per-scenario classification and resolution outcome.",
+      "v1_0_to_v1_1_change": "New floor added in Phase 3 (Goodhart attack). Threshold revised from arbitrary 60% to design-intent-anchored 70% on AUTONOMOUS_ELIGIBLE subset.",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-13",
+      "scope": "substrate",
+      "name": "Biomedical alert latency",
+      "assertion": "End-to-end latency from biomedical sensor event detection to crew-perceptible alert <= 5 seconds, INCLUDING chain signing of the alert event. Alert classes: cardiac arrhythmia, hypoxia, hypercapnia, hyperthermia, pressure loss, sudden loss of consciousness indicator.",
+      "rationale": "Cross-investigator (flight surgeon) attack: 30+ second alert delay on arrhythmia can kill. Chain signing is part of audit posture and must fit in the budget, not bypass it.",
+      "verification_methodology": "Bench testing with simulated sensor events at known timestamps; measure end-to-end latency over >= 1,000 trials per alert class. p99 latency <= 5 s. Verify each alert event has signed chain entry within latency budget.",
+      "verification_artifact": "Signed latency test report with per-trial timestamps and chain-entry hashes.",
+      "v1_0_to_v1_1_change": "New floor added in Phase 3 (cross-investigator attack).",
+      "confidence": "PLAUSIBLE"
+    },
+    {
+      "id": "HF-14",
+      "scope": "substrate",
+      "name": "Kernel re-verification on modification",
+      "assertion": "Any post-deployment modification to the safety-critical kernel firmware requires a signed re-verification artifact (formal verification re-run + WCET re-analysis) committed to the chain BEFORE deployment. Unverified modifications cannot deploy.",
+      "rationale": "Cross-investigator (certification engineer) attack: field updates invalidate formal verification. Configuration management is binding.",
+      "verification_methodology": "Process audit: simulate 10 modification cycles (patches, parameter updates, capability extensions). Verify each deployment is preceded by a committed re-verification artifact. Attempt one unauthorized deployment in audit; verify system rejects.",
+      "verification_artifact": "Signed process audit report + deployment rejection log.",
+      "v1_0_to_v1_1_change": "New floor added in Phase 3 (cross-investigator attack).",
+      "confidence": "VERIFIED"
+    },
+    {
+      "id": "HF-15",
+      "scope": "substrate",
+      "name": "Embodied-AI compliance evidence package",
+      "assertion": "System produces a documented evidence package mapping all hard-fail floors to clauses in: (a) ISO 12100 (machine safety risk assessment), (b) ANSI/RIA R15.08-1 (mobile robot safety), (c) ANSI/A3 R15.06-2025 (industrial robot safety) and ANSI/A3 R15.08-2 (autonomy levels for mobile robots), (d) OMB M-25-22 (AIBOM extension for embodied AI), (e) HIPAA (biomedical telemetry on US crewed missions), (f) NASA-STD-3001 (crew health and performance).",
+      "rationale": "Cross-investigator (actuarial underwriter) attack: insurance cannot price without standards mapping. Liability, certification, and procurement all require this package. The active 90-day AIBOM plan is a prerequisite for the M-25-22 evidence component.",
+      "verification_methodology": "Document review by qualified compliance reviewer; verify each hard-fail floor has a documented clause mapping with supporting evidence reference. Underwriter dry-run: a third-party underwriter reviews the package and confirms it is sufficient to begin a policy quote process (not a policy issuance — just a quote process).",
+      "verification_artifact": "Signed evidence package + reviewer sign-off + underwriter dry-run letter.",
+      "v1_0_to_v1_1_change": "New floor added in Phase 3 (cross-investigator attack). Explicit dependency on 90-day AIBOM plan acknowledged.",
+      "confidence": "PLAUSIBLE"
+    }
+  ],
+  "soft_scoring": {
+    "weight": "0-10 per criterion. Hard-fail floors must pass before soft scoring is meaningful.",
+    "criteria": [
+      { "id": "SS-1", "name": "Total system dry mass per suit, kg", "direction": "lower_better" },
+      { "id": "SS-2", "name": "Donning time, minutes", "direction": "lower_better" },
+      { "id": "SS-3", "name": "Joint torque deviation from unsuited baseline, mean across major joints, Nm", "direction": "lower_better" },
+      { "id": "SS-4", "name": "Total field of view, degrees solid angle", "direction": "higher_better" },
+      { "id": "SS-5", "name": "Acoustic isolation, dB attenuation 200-8000 Hz", "direction": "higher_better" },
+      { "id": "SS-6", "name": "Biomedical telemetry channels with signed provenance", "direction": "higher_better" },
+      { "id": "SS-7", "name": "Mean time to repair from FMEA failure modes, hours", "direction": "lower_better" },
+      { "id": "SS-8", "name": "Training time to certified EVA, hours", "direction": "lower_better" },
+      { "id": "SS-9", "name": "NASA TLX subjective workload across standard EVA task battery (now a soft floor with threshold = EMU baseline + 15% tolerance)", "direction": "lower_better" },
+      { "id": "SS-10", "name": "Comm bandwidth tolerance, minimum kbps for nominal operation", "direction": "lower_better" }
+    ]
+  },
+  "non_stationarity_clause": {
+    "summary": "All assertions evaluated under both stationary and drift conditions. Static conformal coverage tested at 1x, 2x, 3x distribution shift on five named distributions. Pass requires Adaptive Conformal Inference (ACI) coverage >= 0.85 under 3x shift.",
+    "named_distributions": [
+      "Crew metabolic rate (drift across deconditioning, age, illness episodes; surface EVA exertion patterns)",
+      "Thermal load on PLSS (drift across solar irradiance, surface vs cave, season, transit solar-side vs shadow-side)",
+      "CO2 partial pressure profile (drift across crew exertion patterns and CO2 scrubber efficiency aging)",
+      "Dust load rate on filters and bearings (monotonic accumulation with rate-drift across surface activity profile)",
+      "Bearing wear rate (monotonic with rate-drift across cycle count and contamination)"
+    ],
+    "verification_methodology": "Aletheia DAC ACI evaluation harness, evaluated on synthetic and (where available) flight-analog datasets across the five distributions at 1x, 2x, 3x shift."
+  },
+  "trivial_pass_strategies_v1_1": [
+    "HF-12 + HF-9 composition: a system that reclassifies actions out of AUTONOMOUS_ELIGIBLE to evade HF-12 (sandbagging). Mitigation: AUTONOMOUS_ELIGIBLE classifications are policy-committed and any reclassification triggers versioned re-commit (per HF-9). Drift in the eligible-set distribution is itself audited.",
+    "HF-1 leaf-level gaming: assign aggressive leaf reliability to non-existent subsystems and let composition pass. Mitigation: leaf-level requirements are flow-down to procurement; supplier evidence is required at procurement-package phase, not just spec phase.",
+    "HF-2 extrapolation overreach: extrapolation rationale claims unsupported confidence. Mitigation: uncertainty bounds required and reviewed.",
+    "HF-13 chain-signing throttle: delay signing to keep per-event latency low while violating overall throughput. Mitigation: signing throughput verified separately as part of HF-8 audit.",
+    "HF-15 evidence package volume cheat: a 500-page binder with weak mapping. Mitigation: reviewer sign-off requires specific clause-to-floor mappings, not document existence."
+  ],
+  "dependency_artifacts_to_commit_with_v1_1": [
+    "Mission EVA manifest (per NASA DRA 5.0 or equivalent) — anchors HF-3",
+    "REQUIRES_HUMAN / AUTONOMOUS_ELIGIBLE policy file — anchors HF-9 and HF-12",
+    "Habitat suit-port interface specification — anchors HF-11",
+    "Rover suit-port interface specification — anchors HF-11",
+    "v1.1 simulation test suite (>= 10,000 stratified decision scenarios) — anchors HF-12 and the non-stationarity clause"
+  ],
+  "open_items_for_v1_2": [
+    "Facility-specific verification protocols for shell-scope floors (selected by hardware partner)",
+    "Reference accelerated-life data may force HF-3 (250 EVAs) revision",
+    "SPE-shelter operational reality may force HF-6 escalation clause to primary",
+    "v1.1 simulation test suite scenario library production (~10k scenarios)"
+  ]
+}

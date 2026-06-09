@@ -1,0 +1,79 @@
+{
+  "ledger_number": "0005",
+  "title": "v0.2-\u03b1 \u2014 LLM inference integration with defense-in-depth",
+  "phase": "ZCS-6 Phase 5 (re-application for v0.2 build cycle)",
+  "predecessor_ledger": "0004",
+  "predecessor_root": "b123bc28b0f23a65ec9ce221ac07f714e5a3a6cd7e340c408245d2957fff9bfe",
+  "benchmark_version": "VBX-ISPS-BENCH-v1.1",
+  "benchmark_hash": "58bf8744d3cc78b1cb7bb88464edb7df796187c45cea1ae483e936249803c1c5",
+  "substrate_version": "v0.2-\u03b1",
+  "commit_root": "e77e79a02d836345cc35d9105862f0fb8c42b1c64fdd2af32c4646b53389e655",
+  "committed_at_utc": "2026-06-08T23:19:52.604898+00:00",
+  "author": {
+    "name": "A. Khaalis Wooden, Sr.",
+    "affiliation": "Visionblox LLC / Zuup Innovation Lab",
+    "academic": "MBA; MSIT Candidate, Southern New Hampshire University",
+    "email_professional": "khaalis.wooden@visionblox.com",
+    "email_academic": "aldrich.wooden@snhu.edu"
+  },
+  "summary": "v0.2-\u03b1 replaces the v0.1.1 rule-based inference stub in the nuanced decision band with a real LLM adapter producing teacher-forced log-probabilities over the eight DECISION_OPTIONS. Two adapter implementations ship: OllamaMistralAdapter (canonical production path for Mistral-7B-Instruct via Ollama, honoring MVCI zero-budget constraint) and TransformersHFAdapter (sandbox demonstration with Qwen2.5-0.5B-Instruct). Defense-in-depth refactor: hard safety floors and physical-validity checks remain deterministic; LLM is consulted only when no floor fires. Verified via 8 new integration tests; all 43 prior tests still pass (51/51 total). HF-12 architecturally upgraded \u2014 threshold-based autonomy routing now load-bearing rather than constant. Production-validated HF-12 numbers require Mistral-7B + calibration audit (carry to v0.2-\u03b2).",
+  "key_changes": {
+    "new_subsystem": "LLM adapter abstraction (src/civium/adapters/)",
+    "production_adapter": "OllamaMistralAdapter (canonical)",
+    "sandbox_adapter": "TransformersHFAdapter (Qwen2.5-0.5B-Instruct)",
+    "defense_in_depth": "civium/inference.py \u2014 Tier 1 floors (deterministic) + Tier 2 LLM nuanced band",
+    "chain_provenance": "INFERENCE_RECOMMENDATION entries now include real model_hash, prompt_hash, logprob_summary (per-option dict), selected_logprob, source",
+    "interface_compatibility": "process_event accepts optional llm_adapter; when None, falls back to v0.1.1 rule-based path (no regression)"
+  },
+  "test_surface": {
+    "total_tests": 51,
+    "passing": 51,
+    "v01_baseline": 31,
+    "phase6_regression_guards": 12,
+    "v02_alpha_llm_integration": 8
+  },
+  "hf12_remeasurement": {
+    "model_used": "hf/Qwen/Qwen2.5-0.5B-Instruct",
+    "n_scenarios": 6,
+    "confidence_range": [
+      0.43,
+      0.443
+    ],
+    "decision_class_concentration": "all 6 \u2192 THERMAL_ADJUST_NOMINAL (0.5B model too weak for nuanced classification; expected sandbox artifact)",
+    "autonomy_rate_at_thresholds": {
+      "0.30": 1.0,
+      "0.40": 1.0,
+      "0.50": 0.0,
+      "0.60": 0.0,
+      "0.70": 0.0,
+      "0.80": 0.0
+    },
+    "architectural_finding": "Threshold is load-bearing; gate routing is now a function of LLM posterior. Binary cut at 0.5 is sandbox-model artifact; production Mistral-7B with wider calibration would discriminate continuously.",
+    "sandbox_inference_latency_s": 33.5,
+    "production_projection_s": "1-3 (Mistral-7B Q4 on Jetson Orin NX)"
+  },
+  "honest_residuals_v02_beta": [
+    "Mistral-7B inference (replacing sandbox 0.5B) \u2014 Ollama adapter is ready; production deployment work",
+    "Calibration audit on labeled PLSS scenario library \u2014 empirical confidence-vs-accuracy validation",
+    "ACI live-pipeline integration \u2014 currently measurement-only; wire as runtime gate on LLM confidence",
+    "Scenario library expansion to \u22651000 labeled nuanced-band states",
+    "Lean 4 / Coq machine-checkable proofs of Mercury (HF-10 full closure) \u2014 NEXT WORK ITEM",
+    "HSM/KMS-backed PHI keys (C-1 full closure)",
+    "OpenTimestamps anchor + ground replication (O-3 full closure)",
+    "Hardware silicon for bus isolation (HF-10 full)"
+  ],
+  "next_work_item": "v0.2-\u03b2 \u2014 Lean 4 proofs of Mercury subleq emulator + O2 control loop",
+  "manifest_sha256": {
+    "src/civium/adapters/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/civium/adapters/base.py": "a70be45f1183ed2f2dd7331b4794634edc2735e2c5f7ee69dd02be631e394eb7",
+    "src/civium/adapters/ollama_mistral.py": "a96bb68fb9ab53cddf1dcdc51743b0485eef79029ba38733b52622b67b134c06",
+    "src/civium/adapters/transformers_hf.py": "112419c09baa1402a69e791bc2d05877f7d9c8edb310c7eaa730329bb0a2755b",
+    "src/civium/inference.py": "a124cdeebaefbc72d5a1d75d393fcf7e93db5fe24268e6cd348ccf395c692c8d",
+    "src/runner/simulate.py": "106650a6b409d65ea94cef6f31f67208dc065318e900ac9d61ab3912867752c7",
+    "tests/test_v02_llm_integration.py": "8444ff4fd6f3ebd36ab27156032d3520c092eabbbbbc3fb385d0469d38f4eb6e",
+    "v02_alpha/hf12_remeasure.py": "82c836abe2813307ac7a95b49526e700515ca6d8dcd461bde9cdf5eb81beac28",
+    "v02_alpha/hf12_remeasure_records.jsonl": "4ceb238ae5288b53d4d5f589d0c5634169e806ae632654a03b30e937f634c88c",
+    "v02_alpha/hf12_remeasure_results.json": "c1e9ece88155e552c2aea166f4a27fa16258433c82b7e464832c9f9acf96fc3e",
+    "V02_ALPHA_REPORT.md": "3882cd638ea30738a55cde951311cc2e56f6fc6a1207898b662c9b6431626544"
+  }
+}

@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" preserveAspectRatio="xMidYMid meet">
+  <!-- ============================================================
+       VISIONBLOX VBX-ISPS "PHRONESIS-M" - INTERPLANETARY SPACESUIT
+       Blueprint sketch, ZCS-6 reference cycle (Phase 6 closed, v0.2-α)
+       ============================================================ -->
+
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a4775" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="finegrid" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#1a4775" stroke-width="0.25" opacity="0.5"/>
+    </pattern>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#6fc7e3" stroke-width="0.6" opacity="0.45"/>
+    </pattern>
+    <pattern id="hatch2" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#6fc7e3" stroke-width="0.6" opacity="0.45"/>
+    </pattern>
+    <pattern id="hatchRad" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#f0a832" stroke-width="0.6" opacity="0.5"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6fc7e3"/>
+    </marker>
+    <marker id="arrowback" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 10 0 L 0 5 L 10 10 z" fill="#6fc7e3"/>
+    </marker>
+    <marker id="callout-dot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6">
+      <circle cx="3" cy="3" r="2" fill="#f0a832"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1200" fill="#0d2b4a"/>
+  <rect width="1600" height="1200" fill="url(#finegrid)"/>
+  <rect width="1600" height="1200" fill="url(#grid)" opacity="0.6"/>
+
+  <!-- Outer border frame -->
+  <rect x="24" y="24" width="1552" height="1152" fill="none" stroke="#6fc7e3" stroke-width="1.5"/>
+  <rect x="36" y="36" width="1528" height="1128" fill="none" stroke="#6fc7e3" stroke-width="0.5"/>
+
+  <!-- ===================== TITLE STRIP ===================== -->
+  <g transform="translate(60, 60)">
+    <text x="0" y="28" fill="#b8e0ec" font-size="32" font-weight="600" letter-spacing="6">VISIONBLOX</text>
+    <text x="0" y="58" fill="#6fc7e3" font-size="18" letter-spacing="3">VBX-ISPS · PHRONESIS-M · INTERPLANETARY SPACESUIT</text>
+    <text x="0" y="80" fill="#4a8fb0" font-size="11" letter-spacing="1.5">METHODOLOGY: ZCS-6 (Phase 6 closed) · BENCHMARK: VBX-ISPS-BENCH v1.1 · SUBSTRATE: v0.2-α</text>
+
+    <text x="1400" y="28" fill="#b8e0ec" font-size="14" letter-spacing="2" text-anchor="end">DWG VBX-ISPS-001</text>
+    <text x="1400" y="48" fill="#6fc7e3" font-size="11" text-anchor="end">SHEET 1 OF 1   REV A</text>
+    <text x="1400" y="68" fill="#6fc7e3" font-size="11" text-anchor="end">SCALE — NTS (SKETCH)</text>
+    <text x="1400" y="86" fill="#4a8fb0" font-size="10" text-anchor="end">manifest e77e79…e89e655</text>
+  </g>
+  <line x1="60" y1="170" x2="1540" y2="170" stroke="#6fc7e3" stroke-width="1"/>
+
+  <!-- ===================== VIEW A — FRONT VIEW (SUITED FIGURE) ===================== -->
+  <g transform="translate(80, 200)">
+    <text x="0" y="0" fill="#b8e0ec" font-size="13" letter-spacing="2">VIEW A — FRONT (SUITED CREW)</text>
+    <text x="0" y="16" fill="#4a8fb0" font-size="10">PHRONESIS-M · pressure garment + PLSS · Mars-class envelope</text>
+
+    <!-- Centerline -->
+    <line x1="220" y1="35" x2="220" y2="640" stroke="#1a4775" stroke-width="0.5" stroke-dasharray="2,3"/>
+
+    <!-- PLSS backpack outline indicators (extending behind figure) -->
+    <path d="M 120 175 L 80 175 L 80 380 L 120 380" fill="none" stroke="#6fc7e3" stroke-width="0.5" stroke-dasharray="3,2"/>
+    <path d="M 320 175 L 360 175 L 360 380 L 320 380" fill="none" stroke="#6fc7e3" stroke-width="0.5" stroke-dasharray="3,2"/>
+    <text x="80" y="395" fill="#4a8fb0" font-size="8">PLSS lobe (rear)</text>
+    <text x="290" y="395" fill="#4a8fb0" font-size="8">PLSS lobe (rear)</text>
+
+    <!-- HELMET — bubble + sun visor + lights -->
+    <circle cx="220" cy="90" r="58" fill="#08213b" stroke="#6fc7e3" stroke-width="1.5"/>
+    <!-- Sun visor (upper arc) -->
+    <path d="M 162 92 A 58 58 0 0 1 278 92" fill="none" stroke="#f0a832" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="220" y="78" text-anchor="middle" fill="#4a8fb0" font-size="7">SUN VISOR</text>
+    <!-- Helmet lights -->
+    <circle cx="180" cy="68" r="3" fill="none" stroke="#f0a832" stroke-width="0.7"/>
+    <circle cx="260" cy="68" r="3" fill="none" stroke="#f0a832" stroke-width="0.7"/>
+    <!-- Comm antenna stub -->
+    <line x1="220" y1="32" x2="220" y2="22" stroke="#6fc7e3" stroke-width="0.8"/>
+    <circle cx="220" cy="20" r="2" fill="none" stroke="#6fc7e3" stroke-width="0.6"/>
+    <!-- HUD overlay (faint) -->
+    <text x="220" y="100" text-anchor="middle" fill="#4a8fb0" font-size="6">HUD</text>
+
+    <!-- Neck ring -->
+    <rect x="195" y="148" width="50" height="10" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <text x="220" y="165" text-anchor="middle" fill="#4a8fb0" font-size="6">NECK BEARING</text>
+
+    <!-- HUT (Hard Upper Torso) — trapezoid shoulders to waist -->
+    <path d="M 130 168 L 310 168 L 295 285 L 145 285 Z" fill="#08213b" stroke="#6fc7e3" stroke-width="1.5"/>
+    <!-- HUT bearing rings at shoulders -->
+    <circle cx="135" cy="180" r="10" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+    <circle cx="305" cy="180" r="10" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+    <!-- HUT closure line (suit-port mating ring on chest) -->
+    <ellipse cx="220" cy="225" rx="45" ry="14" fill="none" stroke="#f0a832" stroke-width="0.9"/>
+    <text x="220" y="228" text-anchor="middle" fill="#f0a832" font-size="7">SUIT PORT i/f</text>
+    <!-- HUT material label -->
+    <text x="220" y="265" text-anchor="middle" fill="#4a8fb0" font-size="7">HUT · composite/Al</text>
+
+    <!-- Waist ring -->
+    <rect x="150" y="285" width="140" height="10" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <text x="220" y="278" text-anchor="middle" fill="#4a8fb0" font-size="6">WAIST BEARING</text>
+
+    <!-- Lower torso (hip area) -->
+    <path d="M 150 295 L 290 295 L 280 348 L 160 348 Z" fill="#08213b" stroke="#6fc7e3" stroke-width="1.2"/>
+    <!-- Hip joints -->
+    <circle cx="170" cy="345" r="9" fill="none" stroke="#f0a832" stroke-width="0.7"/>
+    <circle cx="270" cy="345" r="9" fill="none" stroke="#f0a832" stroke-width="0.7"/>
+
+    <!-- Arms (right side = viewer's left) -->
+    <!-- Upper arm right -->
+    <path d="M 118 188 L 95 280 L 115 285 L 138 195 Z" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <!-- Elbow joint -->
+    <circle cx="105" cy="283" r="11" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+    <!-- Lower arm right -->
+    <path d="M 96 294 L 84 388 L 105 393 L 117 296 Z" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <!-- Glove right -->
+    <ellipse cx="92" cy="402" rx="14" ry="11" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <text x="92" y="424" text-anchor="middle" fill="#4a8fb0" font-size="6">GLOVE</text>
+
+    <!-- Arms (left side = viewer's right, mirrored) -->
+    <path d="M 322 188 L 345 280 L 325 285 L 302 195 Z" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <circle cx="335" cy="283" r="11" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+    <path d="M 344 294 L 356 388 L 335 393 L 323 296 Z" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <ellipse cx="348" cy="402" rx="14" ry="11" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+
+    <!-- Legs -->
+    <!-- Upper leg right -->
+    <rect x="165" y="350" width="42" height="100" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <!-- Knee joint -->
+    <circle cx="186" cy="453" r="11" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+    <!-- Lower leg right -->
+    <rect x="167" y="464" width="38" height="98" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <!-- Boot right -->
+    <path d="M 162 562 L 210 562 L 218 588 L 154 588 Z" fill="#08213b" stroke="#6fc7e3" stroke-width="1.2"/>
+    <text x="186" y="608" text-anchor="middle" fill="#4a8fb0" font-size="6">BOOT · dust seal</text>
+
+    <!-- Upper leg left -->
+    <rect x="233" y="350" width="42" height="100" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <circle cx="254" cy="453" r="11" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+    <rect x="235" y="464" width="38" height="98" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <path d="M 230 562 L 278 562 L 286 588 L 222 588 Z" fill="#08213b" stroke="#6fc7e3" stroke-width="1.2"/>
+
+    <!-- Radiation tiling indicators (targeted shielding sites) -->
+    <rect x="195" y="318" width="50" height="22" fill="url(#hatchRad)" stroke="none"/>
+    <text x="220" y="333" text-anchor="middle" fill="#f0a832" font-size="6">RAD TILE</text>
+
+    <!-- ============ Callouts on the figure ============ -->
+    <g stroke="#f0a832" stroke-width="0.7" fill="none" stroke-dasharray="3,2">
+      <line x1="430" y1="80" x2="278" y2="92" marker-end="url(#callout-dot)"/>
+      <line x1="430" y1="160" x2="312" y2="180" marker-end="url(#callout-dot)"/>
+      <line x1="430" y1="220" x2="265" y2="225" marker-end="url(#callout-dot)"/>
+      <line x1="430" y1="288" x2="290" y2="290" marker-end="url(#callout-dot)"/>
+      <line x1="430" y1="345" x2="280" y2="345" marker-end="url(#callout-dot)"/>
+      <line x1="430" y1="453" x2="265" y2="453" marker-end="url(#callout-dot)"/>
+      <line x1="430" y1="575" x2="286" y2="575" marker-end="url(#callout-dot)"/>
+      <line x1="50" y1="285" x2="115" y2="285" marker-end="url(#callout-dot)"/>
+      <line x1="50" y1="402" x2="78" y2="402" marker-end="url(#callout-dot)"/>
+    </g>
+    <g fill="#f0a832" font-size="9">
+      <text x="440" y="80">① HELMET — bubble + sun visor + lights · HF-11 interop</text>
+      <text x="440" y="160">② SHOULDER BEARING — 360° rotation · HF-3 cycle</text>
+      <text x="440" y="220">③ SUIT-PORT MATING RING — HF-11 habitat i/f</text>
+      <text x="440" y="288">④ WAIST BEARING — HF-3 cycle life ≥250 EVAs</text>
+      <text x="440" y="345">⑤ HIP JOINT — partial-gravity mobility · Z-2 heritage</text>
+      <text x="440" y="453">⑥ KNEE JOINT — 14 powered/passive joints total</text>
+      <text x="440" y="575">⑦ BOOT — dust seal · HF-5 ≤50 g/EVA</text>
+      <text x="40" y="270" text-anchor="end">⑧ ELBOW BEARING</text>
+      <text x="40" y="402" text-anchor="end">⑨ GLOVE — dexterity</text>
+      <text x="40" y="414" text-anchor="end" fill="#e0b878" font-size="8">    grade IV+</text>
+    </g>
+
+    <!-- Height dimension -->
+    <g stroke="#6fc7e3" stroke-width="0.6" fill="none">
+      <line x1="20" y1="30" x2="20" y2="600" marker-start="url(#arrowback)" marker-end="url(#arrow)"/>
+      <line x1="16" y1="30" x2="24" y2="30"/>
+      <line x1="16" y1="600" x2="24" y2="600"/>
+    </g>
+    <text x="10" y="315" text-anchor="middle" fill="#6fc7e3" font-size="10" transform="rotate(-90, 10, 315)">~ 1.85 m suited (95%ile)</text>
+  </g>
+
+  <!-- ===================== VIEW B — RIGHT SIDE PROFILE ===================== -->
+  <g transform="translate(900, 200)">
+    <text x="0" y="0" fill="#b8e0ec" font-size="13" letter-spacing="2">VIEW B — RIGHT SIDE PROFILE</text>
+    <text x="0" y="16" fill="#4a8fb0" font-size="10">PLSS backpack visible · suit-port hang point</text>
+
+    <!-- Centerline -->
+    <line x1="180" y1="30" x2="180" y2="600" stroke="#1a4775" stroke-width="0.5" stroke-dasharray="2,3"/>
+
+    <!-- Helmet profile -->
+    <circle cx="180" cy="90" r="58" fill="#08213b" stroke="#6fc7e3" stroke-width="1.5"/>
+    <path d="M 122 92 A 58 58 0 0 1 238 92" fill="none" stroke="#f0a832" stroke-width="0.8" stroke-dasharray="2,2"/>
+    <!-- Neck ring -->
+    <rect x="160" y="148" width="40" height="10" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+
+    <!-- HUT side profile -->
+    <path d="M 130 168 L 220 168 L 215 285 L 138 285 Z" fill="#08213b" stroke="#6fc7e3" stroke-width="1.5"/>
+
+    <!-- PLSS Backpack (RIGHT SIDE = behind crew, shown clearly here) -->
+    <rect x="220" y="170" width="100" height="220" fill="#0a3a5e" stroke="#6fc7e3" stroke-width="1.5"/>
+    <!-- Sublimator + thermal radiator (upper PLSS) -->
+    <rect x="225" y="178" width="90" height="40" fill="url(#hatch2)" stroke="#6fc7e3" stroke-width="0.6"/>
+    <text x="270" y="202" text-anchor="middle" fill="#6fc7e3" font-size="7">SUBLIMATOR · RADIATOR</text>
+    <!-- O2 / CO2 loop (middle PLSS) -->
+    <rect x="225" y="222" width="90" height="50" fill="none" stroke="#6fc7e3" stroke-width="0.6"/>
+    <text x="270" y="240" text-anchor="middle" fill="#6fc7e3" font-size="7">O2 + CO2 LOOP</text>
+    <text x="270" y="252" text-anchor="middle" fill="#4a8fb0" font-size="6">scrubber · regulator</text>
+    <text x="270" y="263" text-anchor="middle" fill="#4a8fb0" font-size="6">primary + backup</text>
+    <!-- PHRONESIS CORE (mid-low PLSS) - HIGHLIGHTED -->
+    <rect x="225" y="276" width="90" height="40" fill="#082136" stroke="#f0a832" stroke-width="1.5"/>
+    <text x="270" y="293" text-anchor="middle" fill="#f0a832" font-size="9" font-weight="600">PHRONESIS CORE</text>
+    <text x="270" y="306" text-anchor="middle" fill="#f0a832" font-size="6">Jetson Orin NX · 2 kg</text>
+    <!-- Battery pack (lower PLSS) -->
+    <rect x="225" y="320" width="90" height="50" fill="#1a4775" stroke="#6fc7e3" stroke-width="0.8"/>
+    <text x="270" y="340" text-anchor="middle" fill="#6fc7e3" font-size="7">BATTERY</text>
+    <text x="270" y="352" text-anchor="middle" fill="#4a8fb0" font-size="6">Li-ion · 1200 Wh</text>
+    <text x="270" y="363" text-anchor="middle" fill="#4a8fb0" font-size="6">28V · BMS-managed</text>
+
+    <!-- Lower torso side -->
+    <path d="M 138 285 L 215 285 L 210 348 L 145 348 Z" fill="#08213b" stroke="#6fc7e3" stroke-width="1.2"/>
+    <!-- Hip and knee on side view -->
+    <circle cx="175" cy="345" r="9" fill="none" stroke="#f0a832" stroke-width="0.7"/>
+
+    <!-- Leg in stride profile -->
+    <path d="M 158 350 L 145 450 L 175 455 L 188 350 Z" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <circle cx="160" cy="453" r="10" fill="none" stroke="#f0a832" stroke-width="0.7"/>
+    <path d="M 148 462 L 138 565 L 162 568 L 172 465 Z" fill="none" stroke="#6fc7e3" stroke-width="1"/>
+    <!-- Boot in profile (toe forward) -->
+    <path d="M 132 568 L 188 568 L 198 588 L 124 588 Z" fill="#08213b" stroke="#6fc7e3" stroke-width="1.2"/>
+
+    <!-- Suit-port hang point indicator at top of PLSS -->
+    <circle cx="270" cy="170" r="6" fill="none" stroke="#f0a832" stroke-width="0.9"/>
+    <line x1="276" y1="170" x2="340" y2="160" stroke="#f0a832" stroke-width="0.6" stroke-dasharray="2,2"/>
+    <text x="345" y="160" fill="#f0a832" font-size="8">suit-port hang</text>
+
+    <!-- PLSS dimension callout -->
+    <g stroke="#6fc7e3" stroke-width="0.5" fill="none">
+      <line x1="340" y1="170" x2="340" y2="390" marker-start="url(#arrowback)" marker-end="url(#arrow)"/>
+    </g>
+    <text x="346" y="285" fill="#6fc7e3" font-size="9" transform="rotate(-90, 346, 285)">PLSS H 220 mm</text>
+  </g>
+
+  <!-- ===================== SPECS PANEL ===================== -->
+  <g transform="translate(1280, 200)">
+    <text x="0" y="0" fill="#b8e0ec" font-size="13" letter-spacing="2">SPECS</text>
+    <line x1="0" y1="8" x2="240" y2="8" stroke="#6fc7e3" stroke-width="0.6"/>
+    <g font-size="10" fill="#b8e0ec">
+      <text x="0" y="26" fill="#6fc7e3">TOTAL MASS</text>     <text x="240" y="26" text-anchor="end">110 kg</text>
+      <text x="0" y="40" fill="#6fc7e3">HUT MASS</text>        <text x="240" y="40" text-anchor="end">18 kg</text>
+      <text x="0" y="54" fill="#6fc7e3">PLSS MASS</text>       <text x="240" y="54" text-anchor="end">40 kg</text>
+      <text x="0" y="68" fill="#f0a832">CORE MASS</text>       <text x="240" y="68" text-anchor="end" fill="#f0a832">2 kg</text>
+      <text x="0" y="82" fill="#6fc7e3">SUIT PRESSURE</text>   <text x="240" y="82" text-anchor="end">4.3 psia</text>
+      <text x="0" y="96" fill="#6fc7e3">PRE-BREATHE</text>     <text x="240" y="96" text-anchor="end">≤30 min @ 8.2 psia</text>
+      <text x="0" y="110" fill="#6fc7e3">EVA NOMINAL</text>    <text x="240" y="110" text-anchor="end">6–8 h</text>
+      <text x="0" y="124" fill="#6fc7e3">EVA CONTINGENCY</text><text x="240" y="124" text-anchor="end">10 h</text>
+      <text x="0" y="138" fill="#6fc7e3">CYCLE LIFE</text>     <text x="240" y="138" text-anchor="end">≥250 sorties</text>
+      <text x="0" y="152" fill="#6fc7e3">MISSION DURATION</text><text x="240" y="152" text-anchor="end">~900 d</text>
+      <text x="0" y="166" fill="#f0a832">COMPUTE</text>        <text x="240" y="166" text-anchor="end" fill="#f0a832">Jetson Orin NX</text>
+      <text x="0" y="180" fill="#6fc7e3">POWER STEADY</text>   <text x="240" y="180" text-anchor="end">120 W</text>
+      <text x="0" y="194" fill="#6fc7e3">POWER PEAK</text>     <text x="240" y="194" text-anchor="end">200 W</text>
+      <text x="0" y="208" fill="#6fc7e3">BATTERY</text>        <text x="240" y="208" text-anchor="end">1200 Wh</text>
+      <text x="0" y="222" fill="#6fc7e3">SURFACE TEMP</text>   <text x="240" y="222" text-anchor="end">−80 to +20 °C</text>
+      <text x="0" y="236" fill="#6fc7e3">RADIATION ENV</text>  <text x="240" y="236" text-anchor="end">≤150 mSv mission</text>
+      <text x="0" y="250" fill="#6fc7e3">DUST CAP</text>       <text x="240" y="250" text-anchor="end">≤50 g/EVA</text>
+      <text x="0" y="264" fill="#6fc7e3">COMM</text>           <text x="240" y="264" text-anchor="end">S-band + UHF</text>
+      <text x="0" y="278" fill="#f0a832">SECURE ELEM</text>    <text x="240" y="278" text-anchor="end" fill="#f0a832">Ed25519</text>
+      <text x="0" y="292" fill="#f0a832">CHAIN</text>          <text x="240" y="292" text-anchor="end" fill="#f0a832">Aletheia · SQLite</text>
+      <text x="0" y="306" fill="#f0a832">INFERENCE</text>      <text x="240" y="306" text-anchor="end" fill="#f0a832">Mistral-7B (prod)</text>
+      <text x="0" y="320" fill="#6fc7e3">STD</text>            <text x="240" y="320" text-anchor="end">NASA-STD-3001 V2</text>
+    </g>
+  </g>
+
+  <!-- ===================== HF▸HW MAP ===================== -->
+  <g transform="translate(1280, 560)">
+    <text x="0" y="0" fill="#b8e0ec" font-size="13" letter-spacing="2">HF▸HW MAP</text>
+    <text x="0" y="14" fill="#4a8fb0" font-size="9">v1.1 floors → physical subsystem</text>
+    <line x1="0" y1="22" x2="240" y2="22" stroke="#6fc7e3" stroke-width="0.6"/>
+    <g font-size="9" fill="#b8e0ec">
+      <!-- Shell-scope (red) -->
+      <text x="0" y="38" fill="#e26666">HF-1</text>  <text x="36" y="38" fill="#e26666">reliability → garment + PLSS</text>
+      <text x="0" y="52" fill="#e26666">HF-2</text>  <text x="36" y="52" fill="#e26666">multi-mode → PLSS + garment</text>
+      <text x="0" y="66" fill="#e26666">HF-3</text>  <text x="36" y="66" fill="#e26666">250 EVAs → bearings + joints</text>
+      <text x="0" y="80" fill="#e26666">HF-4</text>  <text x="36" y="80" fill="#e26666">pre-breathe → O2 + garment</text>
+      <text x="0" y="94" fill="#e26666">HF-5</text>  <text x="36" y="94" fill="#e26666">dust → suit port + boots</text>
+      <text x="0" y="108" fill="#e26666">HF-6</text> <text x="36" y="108" fill="#e26666">radiation → tiles + Core</text>
+      <text x="0" y="122" fill="#e26666">HF-7</text> <text x="36" y="122" fill="#e26666">repair → modular bus</text>
+      <text x="0" y="136" fill="#e26666">HF-11</text><text x="36" y="136" fill="#e26666">interop → port + comm</text>
+      <!-- Substrate-scope (orange — closed v0.2-α) -->
+      <text x="0" y="154" fill="#f0a832">HF-8</text> <text x="36" y="154" fill="#f0a832">provenance → CORE/Aletheia ●</text>
+      <text x="0" y="168" fill="#f0a832">HF-9</text> <text x="36" y="168" fill="#f0a832">gate → CORE/MVCI ●</text>
+      <text x="0" y="182" fill="#f0a832">HF-10</text><text x="36" y="182" fill="#f0a832">kernel → CORE/Mercury ●*</text>
+      <text x="0" y="196" fill="#f0a832">HF-12</text><text x="36" y="196" fill="#f0a832">autonomy → CORE/Civium ●*</text>
+      <text x="0" y="210" fill="#f0a832">HF-13</text><text x="36" y="210" fill="#f0a832">alert → CORE + biomed ●</text>
+      <text x="0" y="224" fill="#f0a832">HF-14</text><text x="36" y="224" fill="#f0a832">re-verify → CORE/chain ●</text>
+      <text x="0" y="238" fill="#f0a832">HF-15</text><text x="36" y="238" fill="#f0a832">evidence → all ●</text>
+    </g>
+    <g font-size="8" fill="#4a8fb0">
+      <text x="0" y="258">●  closed in v0.2-α (LEDGER #0005)</text>
+      <text x="0" y="270">●* closed with v0.2-β caveat</text>
+      <text x="0" y="282">red shell-scope deferred to v1.2</text>
+    </g>
+  </g>
+
+  <!-- ===================== VIEW C — EXPLODED CROSS-SECTION ===================== -->
+  <g transform="translate(80, 690)">
+    <text x="0" y="0" fill="#b8e0ec" font-size="13" letter-spacing="2">VIEW C — EXPLODED CROSS-SECTION (PLSS)</text>
+    <text x="0" y="16" fill="#4a8fb0" font-size="10">substrate-shell partition · benchmark floor mapping</text>
+
+    <g font-size="10" fill="#b8e0ec">
+      <!-- Layer 1: PLSS outer cover panel -->
+      <rect x="80" y="32" width="800" height="20" fill="url(#hatch)" stroke="#6fc7e3" stroke-width="0.8"/>
+      <text x="890" y="46">① OUTER COVER PANEL · composite shell · MMOD shielding</text>
+
+      <!-- Layer 2: Sublimator + Thermal radiator -->
+      <rect x="80" y="58" width="800" height="28" fill="#0a3a5e" stroke="#6fc7e3" stroke-width="0.8"/>
+      <text x="120" y="76" fill="#6fc7e3" font-size="9">sublimator</text>
+      <line x1="280" y1="58" x2="280" y2="86" stroke="#6fc7e3" stroke-width="0.4" stroke-dasharray="2,2"/>
+      <text x="320" y="76" fill="#6fc7e3" font-size="9">condenser</text>
+      <line x1="450" y1="58" x2="450" y2="86" stroke="#6fc7e3" stroke-width="0.4" stroke-dasharray="2,2"/>
+      <text x="490" y="76" fill="#6fc7e3" font-size="9">radiator</text>
+      <text x="890" y="68">② THERMAL CONTROL · ~750 g/h H2O sublimation peak</text>
+      <text x="890" y="82" fill="#4a8fb0" font-size="9">    LCG return loop · 90 m tygon @ 7-15 °C</text>
+
+      <!-- Layer 3: O2 + CO2 loop -->
+      <rect x="80" y="92" width="800" height="28" fill="#082136" stroke="#6fc7e3" stroke-width="0.8"/>
+      <rect x="100" y="98" width="100" height="18" fill="none" stroke="#6fc7e3" stroke-width="0.6"/>
+      <text x="150" y="110" text-anchor="middle" fill="#6fc7e3" font-size="8">CO2 SCRUB</text>
+      <rect x="220" y="98" width="100" height="18" fill="none" stroke="#6fc7e3" stroke-width="0.6"/>
+      <text x="270" y="110" text-anchor="middle" fill="#6fc7e3" font-size="8">CO2 BACKUP</text>
+      <rect x="340" y="98" width="100" height="18" fill="none" stroke="#6fc7e3" stroke-width="0.6"/>
+      <text x="390" y="110" text-anchor="middle" fill="#6fc7e3" font-size="8">O2 REG</text>
+      <rect x="460" y="98" width="100" height="18" fill="none" stroke="#6fc7e3" stroke-width="0.6"/>
+      <text x="510" y="110" text-anchor="middle" fill="#6fc7e3" font-size="8">O2 SUPPLY</text>
+      <rect x="580" y="98" width="100" height="18" fill="none" stroke="#6fc7e3" stroke-width="0.6"/>
+      <text x="630" y="110" text-anchor="middle" fill="#6fc7e3" font-size="8">CONDENS</text>
+      <text x="890" y="104">③ O2/CO2 LOOP · amine-swing-bed primary, LiOH backup</text>
+      <text x="890" y="116" fill="#4a8fb0" font-size="9">    HF-1 two-fault tolerant · HF-9 SAFETY_CRITICAL</text>
+
+      <!-- Layer 4: PHRONESIS CORE (the highlighted IP moat) -->
+      <rect x="80" y="126" width="800" height="50" fill="#082136" stroke="#f0a832" stroke-width="1.8"/>
+      <text x="480" y="140" text-anchor="middle" fill="#f0a832" font-size="11" font-weight="600">PHRONESIS CORE · substrate compute module</text>
+      <text x="480" y="150" text-anchor="middle" fill="#f0a832" font-size="7">NVIDIA Jetson Orin NX · 16 GB · shielded enclosure · 2 kg</text>
+      <!-- Sub-modules inside Core -->
+      <rect x="100" y="155" width="120" height="18" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <text x="160" y="167" text-anchor="middle" fill="#f0a832" font-size="8">CIVIUM · LLM adapter</text>
+      <rect x="232" y="155" width="100" height="18" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <text x="282" y="167" text-anchor="middle" fill="#f0a832" font-size="8">MVCI · gate</text>
+      <rect x="344" y="155" width="120" height="18" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <text x="404" y="167" text-anchor="middle" fill="#f0a832" font-size="8">ALETHEIA · chain</text>
+      <rect x="476" y="155" width="120" height="18" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <text x="536" y="167" text-anchor="middle" fill="#f0a832" font-size="8">MERCURY · kernel</text>
+      <rect x="608" y="155" width="80" height="18" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <text x="648" y="167" text-anchor="middle" fill="#f0a832" font-size="8">BUS ISO</text>
+      <rect x="700" y="155" width="80" height="18" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <text x="740" y="167" text-anchor="middle" fill="#f0a832" font-size="8">SECURE EL</text>
+      <text x="890" y="140" fill="#f0a832">④ PHRONESIS CORE · the IP moat</text>
+      <text x="890" y="152" fill="#f0a832" font-size="9">    HF-8 · HF-9 · HF-10 · HF-12 · HF-13 · HF-14 · HF-15</text>
+      <text x="890" y="164" fill="#4a8fb0" font-size="9">    Aletheia + MVCI + Mercury + Civium colocated</text>
+      <text x="890" y="176" fill="#4a8fb0" font-size="9">    substrate v0.2-α · 51/51 tests · LEDGER #0005</text>
+
+      <!-- Layer 5: Power management / battery -->
+      <rect x="80" y="182" width="800" height="26" fill="#1a4775" stroke="#6fc7e3" stroke-width="1"/>
+      <text x="480" y="200" text-anchor="middle" fill="#b8e0ec" font-size="11">Li-ion · 1200 Wh · 28 V · BMS · PMU · DC/DC</text>
+      <text x="890" y="194">⑤ POWER · 1200 Wh pack</text>
+      <text x="890" y="206" fill="#4a8fb0" font-size="9">    8h EVA @ 120 W + 25% reserve</text>
+
+      <!-- Layer 6: GNSS / inertial / sensor manifold -->
+      <rect x="80" y="214" width="800" height="20" fill="url(#hatch2)" stroke="#6fc7e3" stroke-width="0.8"/>
+      <text x="890" y="227">⑥ SENSOR MANIFOLD · biomed + PLSS telemetry · IMU + GNSS</text>
+
+      <!-- Layer 7: Suit-port mating plate (back) + comm interface -->
+      <rect x="80" y="240" width="800" height="20" fill="url(#hatch)" stroke="#6fc7e3" stroke-width="0.8"/>
+      <circle cx="340" cy="250" r="4" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <circle cx="370" cy="250" r="4" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <circle cx="400" cy="250" r="4" fill="none" stroke="#f0a832" stroke-width="0.8"/>
+      <text x="890" y="253">⑦ SUIT-PORT PLATE · habitat-side mating · HF-11 interop</text>
+    </g>
+
+    <!-- Stack-up dimension -->
+    <g stroke="#6fc7e3" stroke-width="0.6" fill="none">
+      <line x1="40" y1="32" x2="40" y2="260" marker-start="url(#arrowback)" marker-end="url(#arrow)"/>
+      <line x1="36" y1="32" x2="44" y2="32"/>
+      <line x1="36" y1="260" x2="44" y2="260"/>
+    </g>
+    <text x="22" y="146" text-anchor="middle" fill="#6fc7e3" font-size="10" transform="rotate(-90, 22, 146)">PLSS depth ~220 mm</text>
+  </g>
+
+  <!-- ===================== NOTES PANEL ===================== -->
+  <g transform="translate(80, 1010)">
+    <text x="0" y="0" fill="#b8e0ec" font-size="13" letter-spacing="2">NOTES</text>
+    <line x1="0" y1="8" x2="1000" y2="8" stroke="#6fc7e3" stroke-width="0.5"/>
+    <g font-size="10" fill="#b8e0ec">
+      <text x="0" y="26" fill="#f0a832">1.</text>
+      <text x="20" y="26">Every safety-critical decision attempt produces a signed Aletheia chain entry. Append-every-attempt; HF-8 VERIFIED v0.2-α.</text>
+      <text x="0" y="42" fill="#f0a832">2.</text>
+      <text x="20" y="42">Hard safety floors (hypoxia, hypercapnia, depressurization, sensor faults) are deterministic. LLM cannot override emergencies. HF-9 VERIFIED.</text>
+      <text x="0" y="58" fill="#f0a832">3.</text>
+      <text x="20" y="58">Substrate compute consolidation (~2 kg) drops total suit mass below xEMU baseline. PLAUSIBLE planning estimate; final masses set by shell partner.</text>
+      <text x="0" y="74" fill="#f0a832">4.</text>
+      <text x="20" y="74">Mercury kernel WCET informal proof (5-cycle deterministic). Lean 4 machine-checkable proof is v0.2-β NEXT work item. VERIFIED informal · SPECULATIVE machine-checked.</text>
+      <text x="0" y="90" fill="#f0a832">5.</text>
+      <text x="20" y="90">HF-12 autonomy ratio currently demonstrated with sandbox model (Qwen2.5-0.5B). Production validation requires Mistral-7B + calibration audit (v0.3).</text>
+      <text x="0" y="106" fill="#f0a832">6.</text>
+      <text x="20" y="106">Shell scope (HF-1, 2, 3, 4, 5, 6, 7, 11) deferred to v1.2 with hardware partner. SPECULATIVE pending partner agreement (ILC Dover / Collins Aerospace / equivalent).</text>
+      <text x="0" y="122" fill="#e26666">●</text>
+      <text x="20" y="122" fill="#e26666">SKETCH ONLY — NOT FOR MANUFACTURE. Industrial design, EMC, FMEA repair simulation, accelerated EVA-cycle life test,</text>
+      <text x="20" y="136" fill="#e26666">dust simulant chamber test, accelerator beam test, RF certification, and underwriter dry-run not in scope of this drawing.</text>
+    </g>
+  </g>
+
+  <!-- ===================== TITLE BLOCK ===================== -->
+  <g transform="translate(1100, 1010)">
+    <rect x="0" y="0" width="440" height="140" fill="none" stroke="#6fc7e3" stroke-width="1.2"/>
+    <line x1="0" y1="40" x2="440" y2="40" stroke="#6fc7e3" stroke-width="0.7"/>
+    <line x1="0" y1="80" x2="440" y2="80" stroke="#6fc7e3" stroke-width="0.7"/>
+    <line x1="220" y1="0" x2="220" y2="80" stroke="#6fc7e3" stroke-width="0.7"/>
+    <line x1="146" y1="80" x2="146" y2="140" stroke="#6fc7e3" stroke-width="0.7"/>
+    <line x1="293" y1="80" x2="293" y2="140" stroke="#6fc7e3" stroke-width="0.7"/>
+
+    <g font-size="10" fill="#b8e0ec">
+      <text x="10" y="14" fill="#6fc7e3" font-size="8">DESIGNER</text>
+      <text x="10" y="32">A. K. WOODEN, SR.</text>
+      <text x="230" y="14" fill="#6fc7e3" font-size="8">AFFILIATION</text>
+      <text x="230" y="32">VISIONBLOX LLC</text>
+      <text x="230" y="42" font-size="8" fill="#4a8fb0">Zuup Innovation Lab</text>
+
+      <text x="10" y="54" fill="#6fc7e3" font-size="8">METHODOLOGY</text>
+      <text x="10" y="72">ZCS-6 (Phase 6 closed; v0.2-α)</text>
+      <text x="230" y="54" fill="#6fc7e3" font-size="8">PAPER</text>
+      <text x="230" y="72">VBX_ISPS_IEEE_Paper.pdf</text>
+
+      <text x="10" y="94" fill="#6fc7e3" font-size="8">DWG #</text>
+      <text x="10" y="112">VBX-ISPS-001</text>
+      <text x="10" y="128" font-size="8" fill="#4a8fb0">SKETCH</text>
+
+      <text x="156" y="94" fill="#6fc7e3" font-size="8">DATE</text>
+      <text x="156" y="112">2026-06-09</text>
+      <text x="156" y="128" font-size="8" fill="#4a8fb0">UTC</text>
+
+      <text x="303" y="94" fill="#6fc7e3" font-size="8">REV</text>
+      <text x="303" y="112">A</text>
+      <text x="303" y="128" font-size="8" fill="#4a8fb0">initial sketch</text>
+    </g>
+  </g>
+
+</svg>

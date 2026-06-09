@@ -1,0 +1,46 @@
+{
+  "commit_id": "VBX-ISPS-LEDGER#0002",
+  "family": "VBX-ISPS",
+  "phase": "ZCS-6 Phase 3 closure + Phase 4 re-commit (v1.1)",
+  "created_utc": "2026-06-08T14:18:40Z",
+  "author": "A. Khaalis Wooden, Sr. (MBA; MSIT Candidate, Southern New Hampshire University)",
+  "attribution_entity": "Visionblox LLC / Zuup Innovation Lab",
+  "chain_predecessor": "VBX-ISPS-LEDGER#0001",
+  "chain_predecessor_root_sha256": "4b64f9d6cab14e202b5570f50a07aedb6dba372fa54074961e6069c85cdd99b9",
+  "predecessor_benchmark_sha256": "ac6114a4c0a025f86926fe2d3f95d36a5a8b4796b2893ce58e22df488f7fd861",
+  "artifacts": [
+    {
+      "file": "vbx_isps_bench_v1_1.json",
+      "sha256": "58bf8744d3cc78b1cb7bb88464edb7df796187c45cea1ae483e936249803c1c5",
+      "size_bytes": 28342,
+      "role": "hardened benchmark v1.1 (operational contract)"
+    },
+    {
+      "file": "VBX_ISPS_DELTA_v1_0_to_v1_1.md",
+      "sha256": "b119c07d5885030d4eb02366b07d80085032885ac3d6a85d9721106268877545",
+      "size_bytes": 10225,
+      "role": "delta justification record v1.0 to v1.1"
+    },
+    {
+      "file": "VBX_ISPS_BASELINES_v1_1.md",
+      "sha256": "d753152a409324406e4f33e05a3ea99b7c9410096cfe679a8bf4d4257a7de441",
+      "size_bytes": 9381,
+      "role": "systematic baseline floor scoring scan"
+    }
+  ],
+  "commit_root_sha256": "f15f68fc37f8026d0b3ef31759b25a2bf77e4a268089985f094595a5c1902d08",
+  "signing_key": "PLACEHOLDER - production key custody required for Aletheia DAC chain anchor",
+  "ots_anchor": "PLACEHOLDER - OpenTimestamps anchor to be appended on chain submission",
+  "phase2_exit_verdict": {
+    "substrate_scope": "CLOSED - third-party-runnable verification protocols, ready for Phase 5",
+    "shell_scope": "CONDITIONAL - procurement-package-ready, facility-specific protocols deferred to v1.2 with partner selection"
+  },
+  "dependency_artifacts_outstanding": [
+    "Mission EVA manifest (NASA DRA 5.0 or equivalent) - HF-3 anchor",
+    "REQUIRES_HUMAN / AUTONOMOUS_ELIGIBLE policy file - HF-9 and HF-12 anchor",
+    "Habitat suit-port ICD - HF-11 anchor",
+    "Rover suit-port ICD - HF-11 anchor",
+    "v1.1 simulation test suite (10k+ stratified scenarios) - HF-12 and drift clause anchor"
+  ],
+  "notes": "v1.1 is the operational contract from this point forward. v1.0 (LEDGER#0001) remains in chain as originating artifact. Phase 5 substrate working-code milestone targets the seven substrate-scope floors and is unblocked."
+}
