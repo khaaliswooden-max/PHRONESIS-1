@@ -1,0 +1,65 @@
+{
+  "version": "0.1",
+  "description": "VBX-ISPS Decision Classification Policy v0.1. This file is cryptographically committed alongside the substrate prototype. Reclassification of any decision class out of REQUIRES_HUMAN constitutes a versioned policy update and requires re-commit to chain (HF-9).",
+  "classifications": {
+    "NOMINAL_NO_ACTION": {
+      "level": "AUTONOMOUS_ELIGIBLE",
+      "fallback": "log_only"
+    },
+    "SENSOR_FAULT_SUSPECTED": {
+      "level": "REQUIRES_HUMAN",
+      "fallback": "isolate_sensor_use_redundant"
+    },
+    "THERMAL_ADJUST_NOMINAL": {
+      "level": "AUTONOMOUS_ELIGIBLE",
+      "fallback": "thermal_passive_hold"
+    },
+    "POWER_MGMT_NOMINAL": {
+      "level": "AUTONOMOUS_ELIGIBLE",
+      "fallback": "battery_conserve_hold"
+    },
+    "CO2_PROACTIVE_SCRUB": {
+      "level": "REQUIRES_HUMAN",
+      "fallback": "scrubber_status_quo_with_alert"
+    },
+    "O2_VALVE_EMERGENCY_OPEN": {
+      "level": "SAFETY_CRITICAL",
+      "fallback": "kernel_locked_actuation"
+    },
+    "CO2_SCRUBBER_SWITCHOVER": {
+      "level": "SAFETY_CRITICAL",
+      "fallback": "kernel_locked_actuation"
+    },
+    "PRESSURE_EMERGENCY": {
+      "level": "SAFETY_CRITICAL",
+      "fallback": "kernel_locked_actuation"
+    }
+  },
+  "fallbacks": {
+    "log_only": {
+      "description": "Log the event and continue. No actuation.",
+      "actions": ["chain_append_only"]
+    },
+    "isolate_sensor_use_redundant": {
+      "description": "Mark sensor as faulted on chain; fail over to redundant sensor; alert crew within 30s.",
+      "actions": ["mark_sensor_faulted", "engage_redundant_sensor", "crew_alert_30s"]
+    },
+    "thermal_passive_hold": {
+      "description": "Hold thermal control at last-known-safe state; alert crew advisory.",
+      "actions": ["hold_thermal_setpoint", "advisory_alert"]
+    },
+    "battery_conserve_hold": {
+      "description": "Engage minimum-power profile; alert crew advisory.",
+      "actions": ["minimum_power_mode", "advisory_alert"]
+    },
+    "scrubber_status_quo_with_alert": {
+      "description": "Continue current scrubber configuration; alert crew within 60s.",
+      "actions": ["no_actuation", "crew_alert_60s"]
+    },
+    "kernel_locked_actuation": {
+      "description": "Delegate to Mercury deterministic kernel; gate cannot reroute.",
+      "actions": ["delegate_to_kernel"]
+    }
+  },
+  "reclassification_rule": "Any modification to the 'level' field of any decision class requires (1) a new policy file version, (2) re-commit of the new policy file hash to the chain, (3) explicit human authorization entry on chain prior to the new policy taking effect."
+}
