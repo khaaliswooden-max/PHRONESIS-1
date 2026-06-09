@@ -5,481 +5,759 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PHRONESIS 1 — Interplanetary Spacesuit Substrate · VBX-ISPS</title>
 <meta name="description" content="Compliance-graded autonomous decision substrate for an interplanetary spacesuit life-support system. Falsification-first methodology, cryptographic provenance, deterministic safety floors.">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%23eaeaea' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23eaeaea'/%3E%3Cline x1='32' y1='4' x2='32' y2='14' stroke='%23eaeaea' stroke-width='2'/%3E%3Cline x1='32' y1='50' x2='32' y2='60' stroke='%23eaeaea' stroke-width='2'/%3E%3Cline x1='4' y1='32' x2='14' y2='32' stroke='%23eaeaea' stroke-width='2'/%3E%3Cline x1='50' y1='32' x2='60' y2='32' stroke='%23eaeaea' stroke-width='2'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
   :root {
-    --navy:        #0d2b4a;
-    --navy-deep:   #081d34;
-    --navy-line:   #143a63;
-    --cyan:        #6fc7e3;
-    --cyan-dim:    #4a9bb5;
-    --offwhite:    #b8e0ec;
-    --paper:       #e6f1f6;
-    --orange:      #f0a832;
-    --red:         #e26666;
-    --muted:       #6a8aa6;
-    --mono: "SF Mono", "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
-    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, system-ui, sans-serif;
+    --bg:        #000;
+    --bg-soft:   #0a0a0a;
+    --line:      #1f1f1f;
+    --line-soft: #141414;
+    --ink:       #eaeaea;
+    --ink-dim:   #9a9a9a;
+    --ink-faint: #5a5a5a;
+    --accent:    #6fc7e3;
+    --warn:      #f0a832;
+    --crit:      #e26666;
+    --good:      #6ee29a;
+    --serif: "Bodoni Moda", "Didot", "Bodoni 72", "Playfair Display", Georgia, serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
   }
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
-    background: var(--navy-deep);
-    color: var(--paper);
-    font-family: var(--sans);
-    line-height: 1.55;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted var(--cyan-dim); }
-  a:hover { color: var(--orange); border-bottom-color: var(--orange); }
+  a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    transition: border-color .15s, color .15s;
+  }
+  a:hover { color: #fff; border-bottom-color: var(--ink-dim); }
   code, pre, .mono { font-family: var(--mono); }
   pre {
-    background: var(--navy);
-    border: 1px solid var(--navy-line);
-    padding: 14px 16px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    padding: 18px 20px;
     overflow-x: auto;
-    font-size: 13px;
-    color: var(--offwhite);
-    border-radius: 2px;
+    font-size: 12.5px;
+    color: var(--ink);
+    line-height: 1.6;
   }
   code {
-    background: var(--navy);
+    background: var(--bg-soft);
     padding: 1px 6px;
-    font-size: 0.9em;
-    color: var(--offwhite);
-    border-radius: 2px;
+    font-size: 0.92em;
+    color: var(--ink);
+    border: 1px solid var(--line);
   }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
 
-  /* Header */
-  header.site {
-    border-bottom: 1px solid var(--navy-line);
-    padding: 22px 0 18px;
-    background: var(--navy-deep);
-    position: sticky; top: 0; z-index: 10;
-    backdrop-filter: blur(6px);
+  /* ========== TOP BAR ========== */
+  header.top {
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(8px);
   }
-  header.site .row {
-    display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 22px;
-  }
-  header.site .title {
+  header.top .row {
+    display: flex; align-items: center; gap: 32px;
     font-family: var(--mono);
-    font-size: 14px;
-    color: var(--cyan);
+    font-size: 12px;
     letter-spacing: 0.04em;
   }
-  header.site .title b { color: var(--paper); font-weight: 600; }
-  header.site nav {
+  .brand {
     font-family: var(--mono);
-    font-size: 13px;
-    margin-left: auto;
-  }
-  header.site nav a {
-    color: var(--offwhite); border: none;
-    margin-left: 16px;
-  }
-  header.site nav a:hover { color: var(--orange); }
-
-  /* Hero */
-  section.hero {
-    padding: 64px 0 36px;
-    border-bottom: 1px solid var(--navy-line);
-  }
-  h1 {
-    font-size: 44px;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin: 0 0 18px;
-    color: var(--paper);
-    font-weight: 600;
-  }
-  h1 .v { color: var(--cyan); font-family: var(--mono); font-size: 24px; font-weight: 400; display: block; margin-top: 6px; }
-  .lede {
-    font-size: 19px;
-    color: var(--offwhite);
-    max-width: 720px;
-    margin: 0 0 24px;
-  }
-  .lede em { color: var(--orange); font-style: normal; }
-
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    margin-top: 32px;
-  }
-  .metric {
-    border: 1px solid var(--navy-line);
-    background: var(--navy);
-    padding: 14px 16px;
-  }
-  .metric .n {
-    font-family: var(--mono);
-    font-size: 26px;
-    color: var(--cyan);
-    line-height: 1;
-  }
-  .metric .l {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  /* Sections */
-  section { padding: 56px 0; border-bottom: 1px solid var(--navy-line); }
-  section:last-of-type { border-bottom: none; }
-  h2 {
-    font-size: 13px;
+    color: var(--ink);
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: var(--cyan);
-    margin: 0 0 8px;
-    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .brand .sub {
+    color: var(--ink-dim);
+    font-weight: 400;
+    margin-left: 8px;
+    text-transform: lowercase;
+    letter-spacing: 0.06em;
+  }
+  nav.primary {
+    display: flex; gap: 28px;
+    margin: 0 auto;
+  }
+  nav.primary a {
+    color: var(--ink-dim);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
     font-weight: 500;
   }
-  h2 + .tag {
-    font-size: 30px;
-    color: var(--paper);
-    margin: 0 0 28px;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    font-weight: 600;
+  nav.primary a:hover { color: var(--ink); }
+  .meta-right {
+    color: var(--ink-dim);
+    font-size: 12px;
+    letter-spacing: 0.04em;
   }
-  h3 {
-    font-size: 18px;
-    color: var(--paper);
-    margin: 0 0 8px;
-    font-weight: 600;
-  }
-  p { color: var(--offwhite); }
+  .meta-right b { color: var(--ink); font-weight: 500; }
 
-  /* Live substrate badges */
-  .stack { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .stack .card {
-    border: 1px solid var(--navy-line);
-    background: var(--navy);
-    padding: 16px 18px;
+  /* ========== HERO ========== */
+  section.hero { padding: 96px 0 72px; border-bottom: 1px solid var(--line); }
+  .pill-row {
+    display: flex; align-items: center; gap: 18px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
   }
-  .stack .card .name {
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid var(--line);
+    padding: 7px 14px;
     font-family: var(--mono);
-    color: var(--cyan);
-    font-size: 13px;
-    letter-spacing: 0.06em;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
   }
-  .stack .card .desc {
-    color: var(--offwhite);
+  .pill .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--good);
+    box-shadow: 0 0 10px var(--good);
+  }
+  .pill-bare {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-dim);
+  }
+
+  h1.display {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(72px, 14vw, 200px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0 0 48px;
+    color: var(--ink);
+    text-shadow: 0 0 32px rgba(255,255,255,0.18), 0 0 80px rgba(255,255,255,0.06);
+  }
+
+  .lede-serif {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(24px, 3.4vw, 38px);
+    line-height: 1.25;
+    color: var(--ink);
+    max-width: 900px;
+    margin: 0 0 40px;
+    letter-spacing: -0.005em;
+  }
+
+  .lede-mono {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 14.5px;
+    line-height: 1.7;
+    max-width: 760px;
+    margin: 0;
+  }
+  .lede-mono b { color: var(--ink); font-weight: 500; }
+
+  /* ========== SECTION CHROME ========== */
+  section { padding: 88px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 24px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 18px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+  }
+  .section-kicker {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+  }
+  h2.section-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(34px, 5.5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 28px;
+    max-width: 950px;
+  }
+  h2.section-title em { font-style: italic; color: var(--ink); }
+  p.body {
+    font-family: var(--mono);
+    color: var(--ink-dim);
     font-size: 14px;
-    margin: 6px 0 10px;
+    line-height: 1.75;
+    max-width: 720px;
   }
-  .badge {
-    display: inline-block;
+  p.body b { color: var(--ink); font-weight: 500; }
+
+  /* ========== COMPONENT GRID ========== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 40px;
+  }
+  .grid .cell {
+    background: var(--bg);
+    padding: 28px 26px;
+  }
+  .cell-name {
     font-family: var(--mono);
     font-size: 11px;
-    padding: 2px 8px;
-    border: 1px solid;
-    letter-spacing: 0.06em;
+    color: var(--ink-dim);
     text-transform: uppercase;
+    letter-spacing: 0.22em;
+    margin-bottom: 14px;
   }
-  .badge.pass { color: var(--cyan); border-color: var(--cyan-dim); }
-  .badge.caveat { color: var(--orange); border-color: var(--orange); }
-  .badge.spec { color: var(--red); border-color: var(--red); }
-  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
-  .dot.pass { background: var(--cyan); }
-  .dot.caveat { background: var(--orange); }
-  .dot.spec { background: var(--red); }
-
-  /* Refusals */
-  .refusals { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  .refusal {
-    border-left: 2px solid var(--cyan-dim);
-    padding: 4px 0 4px 18px;
+  .cell-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--ink);
+    margin: 0 0 12px;
+    line-height: 1.1;
   }
-  .refusal h3 { color: var(--cyan); font-size: 16px; }
-  .refusal p { font-size: 14px; margin: 6px 0 0; }
-
-  /* Flow */
-  .flow {
-    background: var(--navy);
-    border: 1px solid var(--navy-line);
-    padding: 18px 20px;
+  .cell-desc {
     font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 18px;
+  }
+  .marker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .marker .m-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .marker.verified { color: var(--good); }
+  .marker.verified .m-dot { background: var(--good); }
+  .marker.plausible { color: var(--warn); }
+  .marker.plausible .m-dot { background: var(--warn); }
+  .marker.spec { color: var(--crit); }
+  .marker.spec .m-dot { background: var(--crit); }
+
+  /* ========== PRINCIPLES ========== */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+    margin-top: 36px;
+  }
+  .principle {
+    padding: 36px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .principle:nth-child(2n) { border-right: none; }
+  .principle:nth-last-child(-n+2) { border-bottom: none; }
+  .principle .n {
+    font-family: var(--mono);
+    color: var(--ink-faint);
     font-size: 12px;
-    color: var(--offwhite);
-    line-height: 1.65;
+    letter-spacing: 0.16em;
+    margin-bottom: 16px;
+  }
+  .principle h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 0 0 14px;
+    font-style: italic;
+  }
+  .principle p {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ========== BLUEPRINT FLOW ========== */
+  .flow {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    padding: 32px 36px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    line-height: 1.75;
     overflow-x: auto;
     white-space: pre;
+    margin-top: 40px;
+  }
+  .flow .hl { color: var(--ink); }
+  .flow .accent { color: var(--accent); }
+
+  .layer-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 32px;
+  }
+  .layer-strip .layer {
+    background: var(--bg);
+    padding: 22px 24px;
+  }
+  .layer .ord {
+    font-family: var(--mono);
+    color: var(--ink-faint);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-bottom: 12px;
+  }
+  .layer .kind {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .layer .what {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 13px;
+    line-height: 1.6;
   }
 
-  /* Table */
+  /* ========== TABLES ========== */
+  .table-wrap { border: 1px solid var(--line); margin-top: 32px; }
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
-    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
   }
   th, td {
-    border-bottom: 1px solid var(--navy-line);
-    padding: 10px 8px;
     text-align: left;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--line);
     vertical-align: top;
   }
+  tbody tr:last-child td { border-bottom: none; }
   th {
-    font-family: var(--mono);
     font-size: 11px;
-    color: var(--muted);
+    color: var(--ink-faint);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     font-weight: 500;
+    background: var(--bg-soft);
   }
-  td.mono { font-family: var(--mono); color: var(--offwhite); font-size: 13px; }
+  td.k {
+    color: var(--ink-dim);
+    width: 28%;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 11.5px;
+  }
+  td.v { color: var(--ink); }
+  td.hash {
+    font-size: 12px;
+    word-break: break-all;
+    color: var(--ink);
+  }
 
-  /* Footer */
+  /* ========== STATUS TABLE BADGES ========== */
+  .stat {
+    display: inline-block;
+    padding: 3px 10px;
+    border: 1px solid;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .stat.pass { color: var(--good); border-color: var(--good); }
+  .stat.caveat { color: var(--warn); border-color: var(--warn); }
+
+  /* ========== VERIFY BLOCK ========== */
+  .verify-head {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    margin-top: 36px;
+    margin-bottom: 14px;
+  }
+
+  /* ========== FOOTER ========== */
   footer {
-    border-top: 1px solid var(--navy-line);
-    padding: 32px 0 56px;
-    font-size: 13px;
-    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding: 56px 0 96px;
   }
-  footer p { color: var(--muted); margin: 4px 0; }
-  footer .crest { color: var(--cyan); font-family: var(--mono); letter-spacing: 0.08em; }
+  footer .crest {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  footer p {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 12.5px;
+    line-height: 1.75;
+    margin: 6px 0;
+    max-width: 760px;
+  }
+  footer .footer-links {
+    margin-top: 22px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  footer .footer-links a {
+    color: var(--ink-dim);
+    border: none;
+    margin-right: 22px;
+  }
+  footer .footer-links a:hover { color: var(--ink); }
+  footer .footer-links a::after {
+    content: " →";
+    color: var(--ink-faint);
+  }
 
-  .hash { word-break: break-all; color: var(--offwhite); }
-
-  /* Mobile */
-  @media (max-width: 720px) {
-    h1 { font-size: 32px; }
-    h2 + .tag { font-size: 24px; }
-    .metrics { grid-template-columns: repeat(2, 1fr); }
-    .stack, .refusals { grid-template-columns: 1fr; }
-    header.site nav a { margin-left: 10px; font-size: 12px; }
-    header.site nav { width: 100%; margin-left: 0; }
+  /* ========== MOBILE ========== */
+  @media (max-width: 900px) {
+    .wrap { padding: 0 22px; }
+    header.top .row { gap: 16px; flex-wrap: wrap; }
+    nav.primary { gap: 14px; margin: 0; width: 100%; order: 3; overflow-x: auto; }
+    nav.primary a { font-size: 11px; letter-spacing: 0.14em; }
+    .meta-right { font-size: 11px; }
+    h1.display { font-size: 64px; }
+    .lede-serif { font-size: 22px; }
+    section { padding: 60px 0; }
+    section.hero { padding: 56px 0 48px; }
+    .grid, .layer-strip { grid-template-columns: 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .principle { border-right: none; border-bottom: 1px solid var(--line); }
+    .principle:last-child { border-bottom: none; }
+    td.k { width: 38%; }
+    .section-head { flex-wrap: wrap; gap: 10px; }
+    h2.section-title { font-size: 32px; }
   }
 </style>
 </head>
 <body>
 
-<header class="site">
+<!-- ========== TOP BAR ========== -->
+<header class="top">
   <div class="wrap row">
-    <div class="title"><b>PHRONESIS 1</b> &middot; Interplanetary Spacesuit Substrate &middot; VBX-ISPS</div>
-    <nav>
-      <a href="#substrate">Substrate</a>
+    <div class="brand">PHRONESIS 1 <span class="sub">vbx-isps</span></div>
+    <nav class="primary">
+      <a href="#substrate">The Substrate</a>
       <a href="#principles">Principles</a>
-      <a href="#architecture">Architecture</a>
+      <a href="#blueprint">Blueprint</a>
       <a href="#provenance">Provenance</a>
       <a href="#status">Status</a>
     </nav>
+    <div class="meta-right">ledger <b>0005</b> &middot; <b>v0.2-&alpha;</b></div>
   </div>
 </header>
 
+<!-- ========== HERO ========== -->
 <section class="hero">
   <div class="wrap">
-    <h1>
-      A decision substrate that refuses to fake authority.
-      <span class="v">v0.2-&alpha; &middot; LEDGER #0005 &middot; 51 / 51 tests passing</span>
-    </h1>
-    <p class="lede">
-      PHRONESIS 1 is the compliance-graded autonomous decision substrate for an interplanetary
-      spacesuit life-support system. Hard safety floors run <em>before</em> the LLM and can
-      bypass it entirely. Every decision attempt &mdash; including timeouts, rejections, and
-      fallbacks &mdash; produces a signed, replay-verifiable chain entry.
+    <div class="pill-row">
+      <span class="pill"><span class="dot"></span>SUBSTRATE LIVE &middot; 51 / 51 PASSING</span>
+      <span class="pill-bare">VISIONBLOX VBX-ISPS &middot; ZUUP INNOVATION LAB</span>
+    </div>
+
+    <h1 class="display">PHRONESIS 1</h1>
+
+    <p class="lede-serif">
+      Compliance-graded autonomous decisions for an interplanetary spacesuit &mdash;
+      under <em>hard deterministic floors</em>.
     </p>
 
-    <div class="metrics">
-      <div class="metric"><div class="n">7</div><div class="l">Substrate HF floors</div></div>
-      <div class="metric"><div class="n">5</div><div class="l">Component layers</div></div>
-      <div class="metric"><div class="n">5&nbsp;cycles</div><div class="l">Kernel WCET</div></div>
-      <div class="metric"><div class="n">1300&times;</div><div class="l">Under alert budget</div></div>
-    </div>
+    <p class="lede-mono">
+      A five-layer substrate that treats the LLM as a witness, not an authority.
+      Safety floors evaluate <b>before</b> the model, the subleq kernel deterministically actuates
+      the safety-critical band, and every decision attempt &mdash; including timeouts, rejections,
+      and fallbacks &mdash; produces a signed, replay-verifiable chain entry. Built and <b>accepted by
+      falsification</b> against a cryptographically frozen benchmark.
+    </p>
   </div>
 </section>
 
+<!-- ========== SUBSTRATE ========== -->
 <section id="substrate">
   <div class="wrap">
-    <h2>The substrate, live</h2>
-    <p class="tag">Deterministic &rarr; probabilistic &rarr; deterministic.</p>
-    <p>
-      Five components colocated on a ~2&nbsp;kg compute module &mdash; the
-      <em>Phronesis Core</em>. Hard floors evaluate first, the LLM operates only in the
-      nuanced band, the kernel deterministically actuates safety-critical decisions, and
-      the privileged-write bus is gated by a boot-time secret token.
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <span class="section-kicker">The Substrate, live</span>
+    </div>
+    <h2 class="section-title">Five components colocated on a <em>~2 kg compute module.</em></h2>
+    <p class="body">
+      The pipeline is <b>deterministic &rarr; probabilistic &rarr; deterministic.</b>
+      Hard floors run first. The LLM operates only in the nuanced band. The kernel deterministically
+      actuates safety-critical decisions. The privileged-write bus is gated by a boot-time secret token.
     </p>
 
-    <div class="stack" style="margin-top: 22px;">
-      <div class="card">
-        <div class="name">ALETHEIA</div>
-        <div class="desc">Append-only Ed25519-signed ledger, SQLite-backed, with witness file.</div>
-        <span class="badge pass"><span class="dot pass"></span>VERIFIED</span>
+    <div class="grid">
+      <div class="cell">
+        <div class="cell-name">ALETHEIA</div>
+        <h3 class="cell-title">Signed provenance chain</h3>
+        <p class="cell-desc">Append-only Ed25519-signed ledger, SQLite-backed, witness file, hash-linked.</p>
+        <span class="marker verified"><span class="m-dot"></span>Verified</span>
       </div>
-      <div class="card">
-        <div class="name">MVCI&nbsp;GATE</div>
-        <div class="desc">Three-level classification with safe-passive fallbacks and policy SHA-256 binding.</div>
-        <span class="badge pass"><span class="dot pass"></span>VERIFIED</span>
+      <div class="cell">
+        <div class="cell-name">MVCI GATE</div>
+        <h3 class="cell-title">Three-level approval</h3>
+        <p class="cell-desc">Policy SHA-256 binding, comm-state branching, safe-passive fallback on blackout.</p>
+        <span class="marker verified"><span class="m-dot"></span>Verified</span>
       </div>
-      <div class="card">
-        <div class="name">MERCURY</div>
-        <div class="desc">Subleq VM kernel &mdash; 5-cycle deterministic WCET. Lean 4 proof lands in v0.2-&beta;.</div>
-        <span class="badge caveat"><span class="dot caveat"></span>PLAUSIBLE</span>
+      <div class="cell">
+        <div class="cell-name">MERCURY</div>
+        <h3 class="cell-title">Subleq VM kernel</h3>
+        <p class="cell-desc">Single-instruction VM with deterministic 5-cycle WCET. Lean 4 proof in v0.2-&beta;.</p>
+        <span class="marker plausible"><span class="m-dot"></span>Plausible</span>
       </div>
-      <div class="card">
-        <div class="name">CIVIUM</div>
-        <div class="desc">Mistral-7B production / Qwen-0.5B sandbox + Adaptive Conformal Inference.</div>
-        <span class="badge caveat"><span class="dot caveat"></span>PLAUSIBLE</span>
+      <div class="cell">
+        <div class="cell-name">CIVIUM</div>
+        <h3 class="cell-title">Inference + ACI</h3>
+        <p class="cell-desc">Mistral-7B production / Qwen-0.5B sandbox + adaptive conformal inference.</p>
+        <span class="marker plausible"><span class="m-dot"></span>Plausible</span>
       </div>
-      <div class="card">
-        <div class="name">BUS&nbsp;ISOLATION</div>
-        <div class="desc">Privileged-write safety bus with boot-time secret token. Silicon in v1.0.</div>
-        <span class="badge caveat"><span class="dot caveat"></span>PLAUSIBLE</span>
+      <div class="cell">
+        <div class="cell-name">BUS ISOLATION</div>
+        <h3 class="cell-title">Privileged-write fabric</h3>
+        <p class="cell-desc">Boot-time secret token gates actuation. Silicon enforcement targeted for v1.0.</p>
+        <span class="marker plausible"><span class="m-dot"></span>Plausible</span>
       </div>
-      <div class="card">
-        <div class="name">BIOMEDICAL&nbsp;ALERTS</div>
-        <div class="desc">Latency-budget alert pipeline. p99 measured 1300&times; under budget.</div>
-        <span class="badge pass"><span class="dot pass"></span>VERIFIED</span>
+      <div class="cell">
+        <div class="cell-name">BIOMEDICAL</div>
+        <h3 class="cell-title">Latency-budget alerts</h3>
+        <p class="cell-desc">PLSS biosignal pipeline, p99 measured 1300&times; under budget.</p>
+        <span class="marker verified"><span class="m-dot"></span>Verified</span>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ========== PRINCIPLES ========== -->
 <section id="principles">
   <div class="wrap">
-    <h2>Four things it refuses to fake</h2>
-    <p class="tag">Falsification-first, not validation-first.</p>
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <span class="section-kicker">Four things it refuses to fake</span>
+    </div>
+    <h2 class="section-title"><em>Falsification-first,</em> not validation-first.</h2>
+    <p class="body">
+      The substrate is built to be attacked &mdash; by its own author first. A correct counter-example
+      beats a clever defense. Honest downward revision of a claim is treated as a feature.
+    </p>
 
-    <div class="refusals">
-      <div class="refusal">
-        <h3>Architectural invariant</h3>
-        <p>Deterministic safety floors run before the LLM and can bypass it. No LLM output overrides a floor's outcome &mdash; ever.</p>
+    <div class="principles">
+      <div class="principle">
+        <div class="n">/ 01</div>
+        <h3>The architectural invariant</h3>
+        <p>Deterministic safety floors run before the LLM and can bypass it entirely. No LLM output overrides a floor's outcome &mdash; ever. The defense-in-depth ordering is non-negotiable.</p>
       </div>
-      <div class="refusal">
+      <div class="principle">
+        <div class="n">/ 02</div>
         <h3>Append-only provenance</h3>
-        <p>The Aletheia chain is signed and hash-linked. Truncation paths, unsigned entries, or missing <code>prev_hash</code> linkage are rejected.</p>
+        <p>The Aletheia chain is Ed25519-signed and hash-linked. Truncation paths, unsigned entries, or missing <code>prev_hash</code> linkage fail integrity tests on contact.</p>
       </div>
-      <div class="refusal">
-        <h3>Frozen benchmark</h3>
+      <div class="principle">
+        <div class="n">/ 03</div>
+        <h3>The benchmark is the legislature</h3>
         <p>VBX-ISPS-BENCH v1.1 is cryptographically committed for the v1.x major. If a candidate fails a floor, the candidate is fixed &mdash; not the benchmark.</p>
       </div>
-      <div class="refusal">
+      <div class="principle">
+        <div class="n">/ 04</div>
         <h3>Honest epistemic markers</h3>
-        <p>Every load-bearing claim carries <span style="color:var(--cyan)">VERIFIED</span>, <span style="color:var(--orange)">PLAUSIBLE</span>, or <span style="color:var(--red)">SPECULATIVE</span>. Markers are never stripped to make a document read more confidently.</p>
+        <p>Every load-bearing claim carries <span style="color:var(--good)">Verified</span>, <span style="color:var(--warn)">Plausible</span>, or <span style="color:var(--crit)">Speculative</span>. Markers are never stripped to make a document read more confidently.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="architecture">
+<!-- ========== BLUEPRINT ========== -->
+<section id="blueprint">
   <div class="wrap">
-    <h2>The instrument</h2>
-    <p class="tag">PLSS telemetry in, signed actuation out.</p>
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <span class="section-kicker">The instrument &middot; engineering blueprint</span>
+    </div>
+    <h2 class="section-title">PLSS telemetry in, <em>signed actuation</em> out.</h2>
+    <p class="body">
+      One pipeline. Three regimes. Every transition emits a signed chain entry, including
+      the negative space &mdash; rejections, timeouts, and safe-passive fallbacks.
+    </p>
 
-    <pre class="flow">   PLSS telemetry
-        |
-        v
-   [Civium]      compliance-graded inference (Mistral-7B / Qwen sandbox + ACI)
-        |
-        v
-   [MVCI Gate]   policy-driven approval classification
-        |
-        +--&gt; AUTONOMOUS_ELIGIBLE --&gt; autonomous execution -----+
-        |                                                      |
-        +--&gt; REQUIRES_HUMAN ----- approved/rejected/blackout -+
-        |                            |                         |
-        |                            v                         |
-        |                       safe-passive fallback ---------+
-        |                                                      |
-        +--&gt; SAFETY_CRITICAL --&gt; [Mercury Subleq kernel] ---&gt; [Bus]
-                                  formally bounded WCET         |
-                                  hardware-isolated             |
-                                                                v
-                                                          actuation
-        |
-        v
-   [Aletheia]    append-only Ed25519-signed hash-chained ledger</pre>
+    <div class="layer-strip">
+      <div class="layer">
+        <div class="ord">REGIME 01 &middot; DETERMINISTIC</div>
+        <div class="kind">Hard floors</div>
+        <div class="what">Physical-validity checks and policy floors evaluate first. The LLM does not see safety-critical inputs.</div>
+      </div>
+      <div class="layer">
+        <div class="ord">REGIME 02 &middot; PROBABILISTIC</div>
+        <div class="kind">Nuanced band</div>
+        <div class="what">Civium runs only when no floor fires. ACI calibrates confidence; MVCI routes by class.</div>
+      </div>
+      <div class="layer">
+        <div class="ord">REGIME 03 &middot; DETERMINISTIC</div>
+        <div class="kind">Kernel &amp; bus</div>
+        <div class="what">Mercury actuates the safety-critical class with 5-cycle WCET. Privileged-write bus gates physical effect.</div>
+      </div>
+    </div>
+
+    <pre class="flow">     PLSS telemetry
+          |
+          v
+     <span class="hl">[ Civium ]</span>      compliance-graded inference (Mistral-7B / Qwen sandbox + ACI)
+          |
+          v
+     <span class="hl">[ MVCI Gate ]</span>   policy-driven approval classification
+          |
+          +--&gt; <span class="accent">AUTONOMOUS_ELIGIBLE</span> --&gt; autonomous execution -----+
+          |                                                       |
+          +--&gt; <span class="accent">REQUIRES_HUMAN</span>      ----- approved / rejected / blackout
+          |                              |                         |
+          |                              v                         |
+          |                       safe-passive fallback -----------+
+          |                                                       |
+          +--&gt; <span class="accent">SAFETY_CRITICAL</span>     --&gt; <span class="hl">[ Mercury Subleq ]</span> ---&gt; <span class="hl">[ Bus ]</span>
+                                          formally bounded WCET    |
+                                          hardware-isolated        v
+                                                              actuation
+          |
+          v
+     <span class="hl">[ Aletheia ]</span>    append-only Ed25519-signed hash-chained ledger
+                    every decision attempt &mdash; signed, replay-verifiable</pre>
   </div>
 </section>
 
+<!-- ========== PROVENANCE ========== -->
 <section id="provenance">
   <div class="wrap">
-    <h2>Provenance you can recompute</h2>
-    <p class="tag">The benchmark is the legislature.</p>
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <span class="section-kicker">Provenance you can recompute</span>
+    </div>
+    <h2 class="section-title">Frozen benchmark, <em>chained substrate.</em></h2>
+    <p class="body">
+      VBX-ISPS-BENCH v1.1 was cryptographically committed before this solution existed.
+      Every substrate version since &mdash; v0.1, v0.1.1, v0.2-&alpha; &mdash; chains back to it
+      through signed ledger entries.
+    </p>
 
-    <table>
-      <tbody>
-        <tr>
-          <th>Benchmark</th>
-          <td class="mono">VBX-ISPS-BENCH v1.1</td>
-        </tr>
-        <tr>
-          <th>SHA-256</th>
-          <td class="mono hash">58bf8744d3cc78b1cb7bb88464edb7df796187c45cea1ae483e936249803c1c5</td>
-        </tr>
-        <tr>
-          <th>Substrate</th>
-          <td class="mono">v0.2-&alpha; &middot; LEDGER #0005</td>
-        </tr>
-        <tr>
-          <th>Commit root</th>
-          <td class="mono hash">e77e79a02d836345cc35d9105862f0fb8c42b1c64fdd2af32c4646b53389e655</td>
-        </tr>
-        <tr>
-          <th>Predecessor</th>
-          <td class="mono hash">b123bc28b0f23a65ec9ce221ac07f714e5a3a6cd7e340c408245d2957fff9bfe</td>
-        </tr>
-        <tr>
-          <th>Committed</th>
-          <td class="mono">2026-06-08 23:19:52 UTC</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td class="k">Benchmark</td><td class="v">VBX-ISPS-BENCH v1.1</td></tr>
+          <tr><td class="k">Benchmark SHA-256</td><td class="hash">58bf8744d3cc78b1cb7bb88464edb7df796187c45cea1ae483e936249803c1c5</td></tr>
+          <tr><td class="k">Substrate</td><td class="v">v0.2-&alpha;</td></tr>
+          <tr><td class="k">Ledger</td><td class="v">#0005 &middot; 2026-06-08 23:19:52 UTC</td></tr>
+          <tr><td class="k">Commit root</td><td class="hash">e77e79a02d836345cc35d9105862f0fb8c42b1c64fdd2af32c4646b53389e655</td></tr>
+          <tr><td class="k">Predecessor</td><td class="hash">b123bc28b0f23a65ec9ce221ac07f714e5a3a6cd7e340c408245d2957fff9bfe</td></tr>
+          <tr><td class="k">Test surface</td><td class="v">51 / 51 passing</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <h3 style="margin-top: 28px;">Verify it yourself</h3>
-    <pre>git clone https://github.com/khaaliswooden-max/PHRONESIS-1.git
-cd PHRONESIS-1
-pip install --break-system-packages cryptography numpy pytest
-python -m pytest substrate/tests/ -v
-# Expected: 51 passed</pre>
+    <div class="verify-head">// Verify it yourself</div>
+    <pre>$ git clone https://github.com/khaaliswooden-max/PHRONESIS-1.git
+$ cd PHRONESIS-1
+$ pip install --break-system-packages cryptography numpy pytest
+$ python -m pytest substrate/tests/ -v
+# expected: 51 passed</pre>
   </div>
 </section>
 
+<!-- ========== STATUS ========== -->
 <section id="status">
   <div class="wrap">
-    <h2>What is true, and what is not yet</h2>
-    <p class="tag">5 outright pass &middot; 2 pass-with-caveat &middot; 0 fail.</p>
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <span class="section-kicker">What is true, and what is not yet</span>
+    </div>
+    <h2 class="section-title">Five outright pass. Two pass-with-caveat. <em>Zero fail.</em></h2>
+    <p class="body">
+      The substrate is the IP moat. v1.2 of the benchmark engages a hardware partner
+      for the shell-scope floors. Markers below are bound to the v0.2-&alpha; measurement pass.
+    </p>
 
-    <table>
-      <thead>
-        <tr><th>Floor</th><th>Status</th><th>Note</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="mono">HF-8</td><td><span class="badge pass">PASS</span></td><td>Decision provenance &mdash; chain integrity, tamper detection.</td></tr>
-        <tr><td class="mono">HF-9</td><td><span class="badge pass">PASS</span></td><td>Approval gate integrity &mdash; 1000-scenario adversarial blackout.</td></tr>
-        <tr><td class="mono">HF-10</td><td><span class="badge caveat">CAVEAT</span></td><td>Kernel + HW isolation &mdash; FV deferred to v0.2-&beta;; isolation is software surrogate.</td></tr>
-        <tr><td class="mono">HF-12</td><td><span class="badge caveat">CAVEAT</span></td><td>Effective autonomy ratio &mdash; threshold now load-bearing; production Mistral-7B needed.</td></tr>
-        <tr><td class="mono">HF-13</td><td><span class="badge pass">PASS</span></td><td>Biomedical alert latency &mdash; p99 measured 1300&times; under budget.</td></tr>
-        <tr><td class="mono">HF-14</td><td><span class="badge pass">PASS</span></td><td>Kernel re-verification process audit.</td></tr>
-        <tr><td class="mono">HF-15</td><td><span class="badge pass">PASS</span></td><td>Compliance evidence package &mdash; structural; underwriter dry-run deferred.</td></tr>
-        <tr><td class="mono">Drift</td><td><span class="badge pass">PASS</span></td><td>Static CI collapse vs ACI hold &mdash; 1 of 5 distributions; extension deferred.</td></tr>
-      </tbody>
-    </table>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Floor</th><th>Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="v">HF-8</td><td><span class="stat pass">Pass</span></td><td>Decision provenance &mdash; chain integrity, tamper detection.</td></tr>
+          <tr><td class="v">HF-9</td><td><span class="stat pass">Pass</span></td><td>Approval gate integrity &mdash; 1000-scenario adversarial blackout.</td></tr>
+          <tr><td class="v">HF-10</td><td><span class="stat caveat">Caveat</span></td><td>Kernel + HW isolation &mdash; FV deferred to v0.2-&beta;; isolation is software surrogate.</td></tr>
+          <tr><td class="v">HF-12</td><td><span class="stat caveat">Caveat</span></td><td>Effective autonomy ratio &mdash; threshold now load-bearing; production Mistral-7B pending.</td></tr>
+          <tr><td class="v">HF-13</td><td><span class="stat pass">Pass</span></td><td>Biomedical alert latency &mdash; p99 measured 1300&times; under budget.</td></tr>
+          <tr><td class="v">HF-14</td><td><span class="stat pass">Pass</span></td><td>Kernel re-verification process audit.</td></tr>
+          <tr><td class="v">HF-15</td><td><span class="stat pass">Pass</span></td><td>Compliance evidence package &mdash; structural; underwriter dry-run deferred.</td></tr>
+          <tr><td class="v">Drift</td><td><span class="stat pass">Pass</span></td><td>Static CI collapse vs ACI hold &mdash; 1 of 5 distributions; extension deferred.</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <h3 style="margin-top: 32px;">Next work item</h3>
-    <p>v0.2-&beta; &mdash; Lean&nbsp;4 machine-checkable proofs of the Mercury subleq emulator and O&#8322; control loop. After that: HSM/KMS-backed PHI keys, OpenTimestamps anchor + ground replication, and hardware silicon for bus isolation.</p>
+    <p class="body" style="margin-top: 32px;">
+      <b>Next work item:</b> v0.2-&beta; &mdash; Lean&nbsp;4 machine-checkable proofs of the
+      Mercury subleq emulator and O&#8322; control loop. After that: HSM/KMS-backed PHI keys,
+      OpenTimestamps anchor + ground replication, and hardware silicon for bus isolation.
+    </p>
   </div>
 </section>
 
+<!-- ========== FOOTER ========== -->
 <footer>
   <div class="wrap">
-    <p class="crest">VBX-ISPS &middot; PHRONESIS-M &middot; Apache 2.0</p>
-    <p>A. Khaalis Wooden, Sr. &mdash; Visionblox LLC / Zuup Innovation Lab. Aldrich K. Wooden, Sr., MBA; MSIT Candidate, Southern New Hampshire University.</p>
-    <p>Methodology: ZCS-6 falsification-first. Authorship of record retained by the principal investigator; AI assistance disclosed in the README acknowledgments.</p>
-    <p style="margin-top:14px;">
-      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1">Repository &rarr;</a>
-      &nbsp;&middot;&nbsp;
-      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1/blob/main/README.md">README</a>
-      &nbsp;&middot;&nbsp;
-      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1/blob/main/VBX_ISPS_IEEE_Paper.pdf">IEEE Paper</a>
-      &nbsp;&middot;&nbsp;
-      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1/blob/main/EPISTEMIC_FRAMEWORK.md">Epistemic Framework</a>
-    </p>
+    <div class="crest">Visionblox <span style="color:var(--ink-dim)">&middot;</span> Zuup Innovation Lab</div>
+    <p>A. Khaalis Wooden, Sr. &mdash; principal investigator. Aldrich K. Wooden, Sr., MBA; MSIT Candidate, Southern New Hampshire University.</p>
+    <p>Methodology: ZCS-6 falsification-first. Apache 2.0. Authorship of record retained by the principal investigator; AI assistance disclosed in the README acknowledgments.</p>
+    <div class="footer-links">
+      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1">Repository</a>
+      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1/blob/main/README.md">Readme</a>
+      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1/blob/main/paper/VBX_ISPS_IEEE_Paper.pdf">IEEE paper</a>
+      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1/blob/main/ledger/VBX_ISPS_LEDGER_0005.json">Ledger #0005</a>
+      <a href="https://github.com/khaaliswooden-max/PHRONESIS-1/blob/main/EPISTEMIC_FRAMEWORK.md">Epistemic framework</a>
+    </div>
   </div>
 </footer>
 
